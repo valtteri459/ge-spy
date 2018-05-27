@@ -1,0 +1,21 @@
+user authentication and registration (VERY VERY IMPORTANT)
+
+item scanning and storing to couchbase for 1 hour so no API stressing (copy from old) - add caching for records so they don't get lost if API decides to ditch them (add+replace to db, no removing old)
+item listing to search page with basic info
+item detail page
+item bookmarks to dashboard
+personal inventory
+    -current logged items and their value + possible acquired price(calculated from amounts and buy prices from transaction history - newest to highest)
+    -value of inventory at different times - calculated from transaction history (used to build daily inventory contents) + that day's price from API
+personal transactions
+    -list previous records
+    -add record
+        -bought  (acquired new with the loss of gp)
+        -sold    (lost item with the gain of gp)
+        -received(acquired new without the loss of gp)
+        -lost    (lost item without the gain of gp)
+calculators (most copy-paste from old)
+    -alch
+    -herb
+    -trees/fruit trees
+    -flipping

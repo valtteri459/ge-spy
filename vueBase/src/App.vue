@@ -1,78 +1,116 @@
 <template>
-
-  <div id="app">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <v-app id="inspire" left-sidebar top-toolbar dark>
-      <v-navigation-drawer persistend fixed left v-model="sideOpen" app>
-            <v-list>
-              <v-list-tile>
-                  <v-list-tile-content>
-                      <v-list-tile-title >
-                          <span>Menu</span>
-                      </v-list-tile-title>
-                  </v-list-tile-content>
-              </v-list-tile>
-              <v-divider></v-divider>
-              <template v-for="item in items">
-                  <v-list-tile v-bind:href="item.href" v-bind:to="{name: item.href}" v-if="item.href !== 'spacer'" :key="item.href">
-                      <v-list-tile-action>
-                          <v-icon light v-html="item.icon" style="color: #E91E63"></v-icon>
-                      </v-list-tile-action>
-                      <v-list-tile-content>
-                          <v-list-tile-title v-html="item.title" style="color: white"></v-list-tile-title>
-                      </v-list-tile-content>
-                  </v-list-tile>
-                  <v-divider v-else :key="item.icon"></v-divider>
-              </template>
-          </v-list>
-      </v-navigation-drawer>
-      <v-toolbar class="indigo" dark app>
-        <v-toolbar-side-icon @click.stop="sideOpen = !sideOpen"></v-toolbar-side-icon>
-        <v-toolbar-title class="white--text hidden-sm-and-down">Example site</v-toolbar-title>
-        <v-spacer class="hidden-xs-only"></v-spacer>
-        <v-spacer v-if="!searchOpen" class="hidden-sm-and-up"></v-spacer>
-        <v-text-field
-          v-if="searchOpen"
-          light
-          solo
-          prepend-icon="search"
-          placeholder="Type keyword...">
-        </v-text-field>
-        <v-btn class="float:right" icon @click.stop="searchOpen = !searchOpen">
-          <v-icon>search</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-content>
-        <v-container fluid>
-          <router-view></router-view>
-        </v-container>
-      </v-content>
-      <v-footer class="indigo" dark app>
-        <span>all broke dang</span>
-      </v-footer>
-    </v-app>
-  </div>
+<div id="app">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <v-app id="inspire" dark>
+    <v-toolbar
+      dark
+      fixed
+      app
+      clipped-right
+    >
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title class='hidden-sm-and-down'>GE spy</v-toolbar-title>
+      <v-spacer class='hidden-sm-and-down'></v-spacer>
+    </v-toolbar>
+    <v-navigation-drawer
+      fixed
+      v-model="drawer"
+      app
+    >
+      <v-list dense>
+        <v-list-tile @click='log("oof")'>
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Dashboard</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click='log("oof")'>
+          <v-list-tile-action>
+            <v-icon>search</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Item search</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider></v-divider>
+        <v-list-group
+            v-for="item in items"
+            v-model="item.active"
+            :key="item.title"
+            :prepend-icon="item.action"
+            no-action
+          >
+            <v-list-tile slot="activator">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile v-for="subItem in item.items" :key="subItem.title" @click="log('clicked stuff')">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-icon>{{ subItem.action }}</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list-group>
+      </v-list>
+    </v-navigation-drawer>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+    <v-footer app class="pl-3 pr-3">
+      <span>GE Spy - open source project by valtteri459</span>
+      <v-spacer></v-spacer>
+      <span>&copy; 2018 (MIT license)</span>
+    </v-footer>
+  </v-app>
+</div>
 </template>
 
 <script>
 export default {
   name: 'app',
   data: () => ({
+    drawer: true,
     items: [
-      {href: 'home', router: true, icon: 'home', title: 'home'},
-      {href: 'home2', router: true, icon: 'settings', title: 'settings'},
-      {href: 'home3'},
-      {href: 'home4', router: true, icon: 'info', title: 'about'}
-    ],
-    sideOpen: false,
-    searchOpen: false
+      {
+        action: 'mdi-database',
+        title: 'Inventory',
+        items: [
+          { title: 'Current inventory' },
+          { title: 'Value history' }
+        ]
+      },
+      {
+        action: 'mdi-cart',
+        title: 'Transactions',
+        items: [
+          { title: 'Previous transactions' },
+          { title: 'New transaction' }
+        ]
+      },
+      {
+        action: 'mdi-calculator',
+        title: 'Calculators',
+        items: [
+          { title: 'Alch profitability' },
+          { title: 'Herb profitability' },
+          { title: 'Trees/Fruit trees' },
+          { title: 'Flipping calculator' }
+        ]
+      }
+    ]
   }),
   methods: {
-    setTo: (target) => {
-      this.selected = target
+    log (string) {
+      console.log(string)
     }
   },
-  computed: {
+  components: {
   }
 }
 </script>
