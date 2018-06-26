@@ -7,7 +7,7 @@
       dark
       fixed
       app
-      clipped-right
+      clipped-left
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title class='hidden-sm-and-down'>GE spy</v-toolbar-title>
@@ -17,9 +17,10 @@
       fixed
       v-model="drawer"
       app
+      clipped
     >
       <v-list dense>
-        <v-list-tile @click='log("oof")'>
+        <v-list-tile to="/">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -38,7 +39,6 @@
         <v-divider></v-divider>
         <v-list-group
             v-for="item in items"
-            v-model="item.active"
             :key="item.title"
             :prepend-icon="item.action"
             no-action
@@ -48,7 +48,7 @@
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile v-for="subItem in item.items" :key="subItem.title" @click="log('clicked stuff')">
+            <v-list-tile v-for="subItem in item.items" :key="subItem.title" :to="subItem.target">
               <v-list-tile-content>
                 <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
               </v-list-tile-content>
@@ -60,7 +60,9 @@
       </v-list>
     </v-navigation-drawer>
     <v-content>
-      <router-view></router-view>
+      <transition name="component-fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </v-content>
     <v-footer app class="pl-3 pr-3">
       <span>GE Spy - open source project by valtteri459</span>
@@ -81,7 +83,7 @@ export default {
         action: 'mdi-database',
         title: 'Inventory',
         items: [
-          { title: 'Current inventory' },
+          { title: 'Current inventory', target: '/inventory' },
           { title: 'Value history' }
         ]
       },
@@ -89,8 +91,7 @@ export default {
         action: 'mdi-cart',
         title: 'Transactions',
         items: [
-          { title: 'Previous transactions' },
-          { title: 'New transaction' }
+          { title: 'Transaction history' }
         ]
       },
       {
@@ -116,5 +117,11 @@ export default {
 </script>
 
 <style>
-
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .2s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>
