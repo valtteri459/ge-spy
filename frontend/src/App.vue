@@ -19,7 +19,7 @@
       app
       clipped
     >
-      <v-list dense>
+      <v-list dense expand>
         <v-list-tile to="/">
           <v-list-tile-action>
             <v-icon>home</v-icon>
