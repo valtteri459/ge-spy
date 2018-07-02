@@ -4,6 +4,6 @@ module.exports = {
     couchBucket:'',
     couchUser: '',
     couchPass: '',
-    sessionSalt: '',
-    port: 8081
+    proxyMode: true,
+    port: 5000
 }
