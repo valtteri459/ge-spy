@@ -28,7 +28,7 @@
             <v-list-tile-title>Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click='log("oof")'>
+        <v-list-tile to="/search/">
           <v-list-tile-action>
             <v-icon>search</v-icon>
           </v-list-tile-action>
@@ -41,6 +41,7 @@
             v-for="item in items"
             :key="item.title"
             :prepend-icon="item.action"
+            :value="true"
             no-action
           >
             <v-list-tile slot="activator">
@@ -85,14 +86,14 @@ export default {
         title: 'Inventory',
         items: [
           { title: 'Current inventory', target: '/inventory' },
-          { title: 'Value history' }
+          { title: 'Value history', target: '/valueHistory' }
         ]
       },
       {
         action: 'mdi-cart',
         title: 'Transactions',
         items: [
-          { title: 'Transaction history' }
+          { title: 'Transaction history', target: '/transactions' }
         ]
       },
       {
