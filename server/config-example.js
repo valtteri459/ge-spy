@@ -1,9 +1,9 @@
 //copy and rename to config.js
 module.exports = {
-    couchHost: '',
-    couchBucket:'',
-    couchUser: '',
-    couchPass: '',
+    mysqlHost: '',
+    mysqlBase: '',
+    mysqlUser: '',
+    mysqlPass: '',
     proxyMode: true,
     port: 5000
 }
