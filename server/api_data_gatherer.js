@@ -23,7 +23,7 @@ module.exports = {
                     if (errTwo) {
                         console.log("Error adding prices:",errTwo)
                     } else {
-                        console.log("price adjustment updated to db (osb)")
+                        console.log("price adjustment updated to db (osb)", new Date().toISOString())
                     }
                 })
             })
