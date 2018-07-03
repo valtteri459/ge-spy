@@ -20,8 +20,14 @@ module.exports = (app, db) =>{
             res.send(JSON.stringify({imagePrefix: lastRes, cached: true}))
         }
     })
+    app.get("/api/catalog", (req, res) => {
+
+    })
+    app.get("/api/itemHistory/:itemId/:startTime/:endTime", (req, res) => {
+
+    })
     if(config.proxyMode)
     app.use("/", proxy("localhost:8080"));
     else
-    console.log("plese put proxyMode on for now")
+    console.log("support for generated artifacts not yet added")
 }
