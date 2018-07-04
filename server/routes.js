@@ -21,10 +21,13 @@ module.exports = (app, db) =>{
         }
     })
     app.get("/api/catalog", (req, res) => {
-
+        //receive a list of all items
     })
     app.get("/api/itemHistory/:itemId/:startTime/:endTime", (req, res) => {
-
+        //gets price history of item from startTime to endTime
+    })
+    app.get("/api/item/:itemId", (req, res) => {
+        //gets item and it's latest price data
     })
     if(config.proxyMode)
     app.use("/", proxy("localhost:8080"));
