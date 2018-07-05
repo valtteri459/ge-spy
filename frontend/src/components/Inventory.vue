@@ -14,6 +14,17 @@
                   <div class="display-2">45</div>
                 </div>
               </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 md4 pa-2>
+        <v-card>
+          <v-container fluid grid-list-lg>
+            <v-layout row wrap>
+              <v-flex xs4>
+                  <v-icon class="display-3">mdi-clipboard-text</v-icon>
+              </v-flex>
               <v-flex xs8>
                 <div class="text-xs-right">
                   <div class="headline">Maybe some cool graphs too</div>
