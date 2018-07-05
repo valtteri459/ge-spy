@@ -28,6 +28,12 @@ module.exports = (app, db) =>{
     })
     app.get("/api/item/:itemId", (req, res) => {
         //gets item and it's latest price data
+        db.query('SELECT * FROM items WHERE id = ?', req.params.itemId, (err, results, fields) => {
+            if (err) {
+                res.status(500).send(err)
+            }
+            res.send(JSON.stringify(results))
+        })
     })
     if(config.proxyMode)
     app.use("/", proxy("localhost:8080"));
