@@ -28,7 +28,15 @@ module.exports = (app, db) =>{
     })
     app.get("/api/item/:itemId", (req, res) => {
         //gets item and it's latest price data
-        db.query('SELECT * FROM items WHERE id = ?', req.params.itemId, (err, results, fields) => {
+        db.query(`SELECT 
+                    items.id, items.name, 
+                    items.members, items.storePrice, 
+                    itemPrices.timeStamp, itemPrices.osbOverall, 
+                    itemPrices.osbBuy,  itemPrices.osbSell, 
+                    itemPrices.buy_quantity, itemPrices.sell_quantity 
+                    FROM items 
+                    JOIN itemPrices 
+                    ON timeStamp = (SELECT timeStamp FROM itemPrices WHERE item = items.id ORDER BY timeStamp DESC LIMIT 1) AND itemPrices.item = items.id WHERE items.id = ?`, req.params.itemId, (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
             }
