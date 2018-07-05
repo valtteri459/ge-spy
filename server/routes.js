@@ -21,10 +21,21 @@ module.exports = (app, db) =>{
         }
     })
     app.get("/api/catalog", (req, res) => {
-        //receive a list of all items
+        db.query(`SELECT * FROM items`, (err, results, fields) => {
+            if (err) {
+                res.status(500).send(err)
+            }
+            res.send(JSON.stringify(results))
+        })
     })
     app.get("/api/itemHistory/:itemId/:startTime/:endTime", (req, res) => {
         //gets price history of item from startTime to endTime
+        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND timeStamp > ? AND timeStamp < ? LIMIT 1000`, [req.params.itemId, req.params.startTime, req.params.endTime], (err, results, fields) => {
+            if (err) {
+                res.status(500).send(err)
+            }
+            res.send(JSON.stringify(results))
+        })
     })
     app.get("/api/item/:itemId", (req, res) => {
         //gets item and it's latest price data
