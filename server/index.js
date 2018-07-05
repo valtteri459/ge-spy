@@ -18,7 +18,12 @@ db.connect((err)=>{
         console.log("UNABLE TO MAKE DATABASE CONNECTION", err)
     } else {
         require("./routes")(app, db);
-        setInterval(() => {scanner.loadData(db)}, 600000)
+        if(!config.noScan) {
+            setInterval(() => { scanner.loadData(db) }, 600000)
+        } else {
+            console.log("scanner not started, noScan set to true")
+        }
+        
     }
 })
 

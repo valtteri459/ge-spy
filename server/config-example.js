@@ -4,6 +4,7 @@ module.exports = {
     mysqlBase: '',
     mysqlUser: '',
     mysqlPass: '',
-    proxyMode: true,
-    port: 5000
+    proxyMode: true,//should UI be proxied from webpack-dev-server project or use local build
+    noScan: false, //disables price scanning, useful for database clients that don't update info
+    port: 5000 //port to serve webapp on
 }
