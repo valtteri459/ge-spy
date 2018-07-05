@@ -14,6 +14,12 @@
                   <div class="display-2">45</div>
                 </div>
               </v-flex>
+              <v-flex xs8>
+                <div class="text-xs-right">
+                  <div class="headline">Maybe some cool graphs too</div>
+                  <div class="display-2">45</div>
+                </div>
+              </v-flex>
             </v-layout>
           </v-container>
         </v-card>
