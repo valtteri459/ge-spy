@@ -47,11 +47,12 @@ module.exports = (app, db) =>{
                     itemPrices.buy_quantity, itemPrices.sell_quantity 
                     FROM items 
                     JOIN itemPrices 
-                    ON timeStamp = (SELECT timeStamp FROM itemPrices WHERE item = items.id ORDER BY timeStamp DESC LIMIT 1) AND itemPrices.item = items.id WHERE items.id = ?`, req.params.itemId, (err, results, fields) => {
+                    ON timeStamp = (SELECT timeStamp FROM itemPrices WHERE item = items.id ORDER BY timeStamp DESC LIMIT 1) 
+                    AND itemPrices.item = items.id WHERE items.id = ?`, req.params.itemId, (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
             }
-            res.send(JSON.stringify(results))
+            res.send(JSON.stringify(results[0] || {Unknown: true}))
         })
     })
     if(config.proxyMode)
