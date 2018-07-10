@@ -5,6 +5,7 @@ import Inventory from '@/components/Inventory'
 import ItemSearch from '@/components/ItemSearch'
 import InvHistory from '@/components/InvHistory'
 import Transactions from '@/components/Transactions'
+import Item from '@/components/Item'
 
 Vue.use(Router)
 
@@ -22,6 +23,10 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: ItemSearch
+    }, {
+      path: '/item/:id/:name',
+      name: 'item',
+      component: Item
     }, {
       path: '/valueHistory',
       name: 'valueHitory',

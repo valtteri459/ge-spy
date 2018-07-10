@@ -30,7 +30,7 @@ module.exports = (app, db) =>{
     })
     app.get("/api/itemHistory/:itemId/:startTime/:endTime", (req, res) => {
         //gets price history of item from startTime to endTime
-        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND timeStamp > ? AND timeStamp < ? LIMIT 1000`, [req.params.itemId, req.params.startTime, req.params.endTime], (err, results, fields) => {
+        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity, accurate FROM itemPrices WHERE item = ? AND timeStamp > ? AND timeStamp < ? LIMIT 1000`, [req.params.itemId, req.params.startTime, req.params.endTime], (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
             }

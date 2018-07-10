@@ -78,8 +78,7 @@
 export default {
   name: 'app',
   data: () => ({
-    drawer: true,
-    keepOpen: true,
+    drawer: false,
     items: [
       {
         action: 'mdi-database',

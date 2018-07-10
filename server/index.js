@@ -20,10 +20,12 @@ db.connect((err)=>{
         require("./routes")(app, db);
         if(!config.noScan) {
             setInterval(() => { scanner.loadData(db) }, 600000)
+            setInterval(() => { scanner.loadGraphs(db) }, 1000*60*60)
         } else {
             console.log("scanner not started, noScan set to true")
         }
-        
+        if (config.scanOnStartup)
+        scanner.loadGraphs(db, true)
     }
 })
 
