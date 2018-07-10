@@ -28,9 +28,18 @@ module.exports = (app, db) =>{
             res.send(JSON.stringify(results))
         })
     })
-    app.get("/api/itemHistory/:itemId/:startTime/:endTime", (req, res) => {
+    app.get("/api/itemHistory/:itemId/:startTime", (req, res) => {
         //gets price history of item from startTime to endTime
-        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity, accurate FROM itemPrices WHERE item = ? AND timeStamp > ? AND timeStamp < ? LIMIT 1000`, [req.params.itemId, req.params.startTime, req.params.endTime], (err, results, fields) => {
+        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND accurate = 1 AND timeStamp < ? ORDER BY timeStamp DESC LIMIT 1000`, [req.params.itemId, req.params.startTime], (err, results, fields) => {
+            if (err) {
+                res.status(500).send(err)
+            }
+            res.send(JSON.stringify(results))
+        })
+    })
+    app.get("/api/itemHistoryVolatile/:itemId/:startTime", (req, res) => {
+        //gets price history of item from startTime to endTime
+        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND accurate = 0 AND timeStamp < ? ORDER BY timeStamp DESC  LIMIT 1000`, [req.params.itemId, req.params.startTime], (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
             }
@@ -47,7 +56,7 @@ module.exports = (app, db) =>{
                     itemPrices.buy_quantity, itemPrices.sell_quantity 
                     FROM items 
                     JOIN itemPrices 
-                    ON timeStamp = (SELECT timeStamp FROM itemPrices WHERE item = items.id ORDER BY timeStamp DESC LIMIT 1) 
+                    ON timeStamp = (SELECT timeStamp FROM itemPrices WHERE item = items.id AND accurate = 0 ORDER BY timeStamp DESC LIMIT 1) 
                     AND itemPrices.item = items.id WHERE items.id = ?`, req.params.itemId, (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)

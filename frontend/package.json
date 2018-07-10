@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-preset-es2015": "^6.24.1",
+    "hchs-vue-charts": "^1.2.8",
     "highlight.js": "^9.12.0",
     "material-icons": "^0.2.3",
     "moment": "^2.22.2",
