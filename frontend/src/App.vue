@@ -78,7 +78,7 @@
 export default {
   name: 'app',
   data: () => ({
-    drawer: true,
+    drawer: false,
     items: [
       {
         action: 'mdi-database',
@@ -111,6 +111,9 @@ export default {
     log (string) {
       console.log(string)
     }
+  },
+  mounted: function () {
+    this.drawer = this.$vuetify.breakpoint.lgAndUp
   },
   components: {
   }

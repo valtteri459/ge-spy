@@ -28,6 +28,22 @@ module.exports = (app, db) =>{
             res.send(JSON.stringify(results))
         })
     })
+    function fullPriceHandler(req, res) {
+      var usedTime = req.params.time || new Date().getTime()
+      db.query(`SELECT items.id, items.name, items.storePrice, b.recordDate, itemPrices.osbOverall, 
+        itemPrices.osbBuy, itemPrices.osbSell, itemPrices.buy_quantity, itemPrices.sell_quantity, itemPrices.accurate
+        FROM items JOIN 
+        (SELECT item, MAX(timeStamp) AS recordDate FROM itemPrices WHERE timeStamp <= ? GROUP BY item) b 
+        ON items.id = b.item 
+        JOIN itemPrices ON (items.id = itemPrices.item AND itemPrices.timeStamp = b.recordDate)`, usedTime, (err, results, fields) => {
+        if (err) {
+          res.status(500).send(err)
+        }
+        res.send(JSON.stringify(results[0] ? results : { Unknown: true }))
+      })
+    }
+    app.get("/api/allPrices", fullPriceHandler)
+    app.get("/api/allPrices/:time", fullPriceHandler)
     app.get("/api/itemHistory/:itemId/:startTime", (req, res) => {
         //gets price history of item from startTime to endTime
         db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND accurate = 1 AND timeStamp < ? ORDER BY timeStamp DESC LIMIT 1000`, [req.params.itemId, req.params.startTime], (err, results, fields) => {
