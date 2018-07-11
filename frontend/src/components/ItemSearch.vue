@@ -2,6 +2,7 @@
   <v-container fluid class="page" fill-height>
     <v-layout justify-center align-center>
       <v-flex shrink style="width:100%; max-width:750px">
+        <h1>GE SPY item database</h1>
         <v-autocomplete
           v-model="friends"
           :disabled="isUpdating"
