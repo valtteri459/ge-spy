@@ -46,6 +46,9 @@
       <v-flex xs12 pa-2>
         <itemPriceGraph :datas="graphData" :loading="loading"></itemPriceGraph>
       </v-flex>
+      <v-flex xs12 pa-2>
+        <itemTradeGraph :datas="graphData" :loading="loading"></itemTradeGraph>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -53,6 +56,7 @@
 <script>
 import limits from '@/assets/limits.js'
 import itemPriceGraph from './utility/itemPriceGraph'
+import itemTradeGraph from './utility/itemTradeGraph'
 export default {
   name: 'item',
   data () {
@@ -102,7 +106,8 @@ export default {
     this.updateData()
   },
   components: {
-    itemPriceGraph
+    itemPriceGraph,
+    itemTradeGraph
   }
 }
 </script>

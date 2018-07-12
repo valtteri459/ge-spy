@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="page">
     <v-layout row wrap>
-      <v-flex xs12 md4 pa-2 v-for="i in Array(10)" :key="i">
+      <v-flex xs12 md4 pa-2 v-for="i in Array(3)" :key="i">
         <v-card>
           <v-container fluid grid-list-lg>
             <v-layout row wrap>
