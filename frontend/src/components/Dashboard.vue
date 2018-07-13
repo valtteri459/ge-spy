@@ -1,35 +1,41 @@
 <template>
   <v-container fluid class="page">
-    <v-layout row wrap>
-      <v-flex xs12 md4 pa-2 v-for="i in Array(3)" :key="i">
-        <v-card>
-          <v-container fluid grid-list-lg>
-            <v-layout row wrap>
-              <v-flex xs4>
-                  <v-icon class="display-3">mdi-clipboard-text</v-icon>
-              </v-flex>
-              <v-flex xs8>
-                <div class="text-xs-right">
-                  <div class="headline">Tyylitehtäviä jäljellä</div>
-                  <div class="display-2">45</div>
-                </div>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <muuri-grid id="example-grid">
+
+      <item-md height="100px">
+        <v-card><v-card-title><h3>oof1 - </h3></v-card-title><v-card-text>{{priceData.length}}</v-card-text></v-card>
+      </item-md>
+      <item-md>
+        <v-card><v-card-title><h3>oof2</h3></v-card-title></v-card>
+      </item-md>
+      <item-md height="100px">
+        <v-card><v-card-title><h3>oof3</h3></v-card-title></v-card>
+      </item-md>
+    </muuri-grid>
   </v-container>
 </template>
 
 <script>
+import { ItemLink, ItemSm, ItemMd, ItemLg } from 'vue-muuri'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      source: 'https://noire.io'
+      source: 'https://noire.io',
+      priceData: []
     }
-  }
+  },
+  methods: {
+    getData () {
+      this.axios.get('/api/allPrices').then(priceData => {
+        this.priceData = priceData.data
+      }).catch(e => console.log(e))
+    }
+  },
+  created: function () {
+    this.getData()
+  },
+  components: { ItemLink, ItemSm, ItemMd, ItemLg }
 }
 </script>
 
