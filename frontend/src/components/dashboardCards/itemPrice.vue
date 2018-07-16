@@ -9,7 +9,9 @@
         ></v-card-media>
       </v-flex>
       <v-flex>
-        <h2>{{prices.filter(row => row.id === opts.targetItem)[0].name}}</h2>
+        <h2>
+          <router-link style="color: white" :to="'/item/' + prices.filter(row => row.id === opts.targetItem)[0].id + '/' + prices.filter(row => row.id === opts.targetItem)[0].name">{{prices.filter(row => row.id === opts.targetItem)[0].name}}</router-link>
+        </h2>
         <p>buy: {{prices.filter(row => row.id === opts.targetItem)[0].osbBuyText}} gp<br/>
         sell: {{prices.filter(row => row.id === opts.targetItem)[0].osbSellText}} gp</p>
       </v-flex>

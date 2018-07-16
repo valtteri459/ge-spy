@@ -33,11 +33,11 @@
         style="overflow: hidden">
         <v-card height="100%" class="flexcard">
           <v-card-text class="grow"><component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts"></component></v-card-text>
-          <v-card-actions><v-btn flat color="orange" @click="testLayout.splice(testLayout.indexOf(item), 1)">delme</v-btn></v-card-actions>
+          <v-card-actions><v-btn flat color="orange" @click="testLayout.splice(testLayout.indexOf(item), 1)">Remove</v-btn></v-card-actions>
         </v-card>
       </GridItem>
     </GridLayout>
-    <v-dialog v-model="newWidget" max-width="500px">
+    <v-dialog v-model="newWidget" max-width="750px">
       <v-card>
         <v-card-title>
           Add widget
@@ -63,8 +63,12 @@
 
 <script>
 import grids from 'vue-grid-layout'
+
 import itemPrice from './dashboardCards/itemPrice'
 import itemPriceForm from './dashboardCards/itemPriceForm'
+
+import profitabilityCalc from './dashboardCards/profitabilityCalc'
+import profitabilityCalcForm from './dashboardCards/profitabilityCalcForm'
 
 var GridLayout = grids.GridLayout
 var GridItem = grids.GridItem
@@ -78,7 +82,7 @@ export default {
       widgetName: null,
       widgetOpts: null,
       dashboardSaved: false,
-      registeredWidgets: [{text: 'item price', value: 'itemPriceForm'}],
+      registeredWidgets: [{text: 'item price', value: 'itemPriceForm'}, {text: 'profitability calculator', value: 'profitabilityCalcForm'}],
       loaded: false,
       testLayout: [
         {'x': 0, 'y': 0, 'w': 2, 'h': 4, 'i': '1', 'element': 'itemPrice', 'opts': {targetItem: 20997}},
@@ -124,7 +128,9 @@ export default {
     GridLayout,
     GridItem,
     itemPrice,
-    itemPriceForm
+    itemPriceForm,
+    profitabilityCalc,
+    profitabilityCalcForm
   }
 }
 </script>

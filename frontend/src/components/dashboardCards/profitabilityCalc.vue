@@ -1,34 +1,80 @@
 <template>
-  <v-container fluid class="page">
+  <v-container>
     <v-layout row wrap>
-      <v-flex xs12 md4 pa-2>
-        <v-card>
-          <v-container fluid grid-list-lg>
-            <v-layout row wrap>
-              <v-flex xs4>
-                  <v-icon class="display-3">mdi-clipboard-text</v-icon>
-              </v-flex>
-              <v-flex xs8>
-                <div class="text-xs-right">
-                  <div class="headline">Past transactions of current user</div>
-                  <div class="display-2">69</div>
-                </div>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
+      <v-flex xs12>
+        <h2>Profitability calculator</h2>
       </v-flex>
+      <v-flex xs6>
+        <h4>Inputs</h4>
+        <table style='width:100%; text-align: center'>
+          <tr>
+            <th>Item</th>
+            <th>Amount</th>
+            <th>Price</th>
+          </tr>
+          <tr v-for="inbound in inItems" :key="inbound.id">
+            <td><router-link color="light-blue" :to="'/item/' + inbound.id + '/' + inbound.name">{{inbound.name}}</router-link></td>
+            <td>{{inbound.amount}}</td>
+            <td>{{inbound.total}} gp</td>
+          </tr>
+        </table>
+      </v-flex>
+      <v-flex xs6>
+        <h4>Outputs</h4>
+        <table style='width:100%; text-align: center'>
+          <tr>
+            <th>Item</th>
+            <th>Amount</th>
+            <th>Price</th>
+          </tr>
+          <tr v-for="inbound in outItems" :key="inbound.id">
+            <td><router-link color="light-blue" :to="'/item/' + inbound.id + '/' + inbound.name">{{inbound.name}}</router-link></td>
+            <td>{{inbound.amount}}</td>
+            <td>{{inbound.total}} gp</td>
+          </tr>
+        </table>
+      </v-flex>
+      <v-flex xs12><v-divider></v-divider><br/>current estimated profits: {{sum}} gp each</v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 export default {
-  name: 'Inventory',
+  name: 'ProfitabilityWidget',
+  props: ['prices', 'img', 'opts'],
   data () {
     return {
-      source: 'https://noire.io'
+      sum: 0,
+      inItems: [],
+      outItems: []
     }
+  },
+  mounted: function () {
+    this.inItems = this.opts.ins.filter(row => {
+      if (row.id === null || row.amount === null) {
+        return false
+      } else {
+        return true
+      }
+    }).map(row => {
+      var item = this.prices.filter(frow => frow.id === row.id)[0]
+      var newRow = Object.assign(row, {price: item.osbOverall, name: item.name, total: item.osbOverall * row.amount})
+      this.sum = this.sum - newRow.total
+      return newRow
+    })
+    this.outItems = this.opts.outs.filter(row => {
+      if (row.id === null || row.amount === null) {
+        return false
+      } else {
+        return true
+      }
+    }).map(row => {
+      var item = this.prices.filter(frow => frow.id === row.id)[0]
+      var newRow = Object.assign(row, {price: item.osbOverall, name: item.name, total: item.osbOverall * row.amount})
+      this.sum = this.sum + newRow.total
+      return newRow
+    })
   }
 }
 </script>
