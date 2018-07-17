@@ -1,5 +1,6 @@
 const config = require("./config.js")
 const proxy = require("express-http-proxy");
+const express = require("express")
 const axios = require("axios")
 var lastRes = ""
 var lastScan = 0
@@ -82,6 +83,8 @@ module.exports = (app, db) =>{
     })
     if(config.proxyMode)
     app.use("/", proxy("localhost:8080"));
-    else
-    console.log("support for generated artifacts not yet added")
+    else {
+      console.log("Serving artifacts from local public instead of proxy")
+      app.use("/", express.static('public'))
+    }
 }
