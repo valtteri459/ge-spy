@@ -7,11 +7,14 @@
             <h2>Personal dashboard
             <v-btn color="success" style="float: right" @click="saveLayout()">Save layout</v-btn>
             <v-btn color="primary" style="float: right" @click="newWidget = true">Add widget</v-btn>
+            <v-btn color="primary" style="float: right" @click="getData() ">Update prices</v-btn>
             </h2>
+            <span>Last price update: {{lastUpdate}}</span>
           </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
+    <v-progress-linear :indeterminate="true" v-if="currentlyLoading"></v-progress-linear>
     <GridLayout
       style="margin:24px"
       :layout="testLayout"
@@ -80,7 +83,9 @@ export default {
       priceData: [],
       newWidget: false,
       widgetName: null,
+      lastUpdate: 'Unknown',
       widgetOpts: null,
+      currentlyLoading: false,
       dashboardSaved: false,
       registeredWidgets: [{text: 'Item price', value: 'itemPriceForm'}, {text: 'Profitability calculator', value: 'profitabilityCalcForm'}],
       loaded: false,
@@ -92,6 +97,7 @@ export default {
   },
   methods: {
     getData () {
+      this.currentlyLoading = true
       this.axios.get('/api/allPrices').then(priceData => {
         this.priceData = priceData.data.map(elem => {
           elem.osbBuyText = elem.osbBuy.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -101,14 +107,22 @@ export default {
           elem.buy_quantityText = elem.buy_quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
           return elem
         })
+        this.lastUpdate = Math.floor(Math.abs(new Date() - priceData.data[0].recordDate) / 1000 / 60) + ' minutes ago'
         this.axios.get('/api/imagePrefix').then(priceData => {
           this.imagePrefix = priceData.data.imagePrefix || ''
           if (localStorage.getItem('dashboard')) {
             this.testLayout = JSON.parse(localStorage.getItem('dashboard'))
           }
           this.loaded = true
-        }).catch(e => console.log(e))
-      }).catch(e => console.log(e))
+          this.currentlyLoading = false
+        }).catch(e => {
+          console.log(e)
+          this.currentlyLoading = false
+        })
+      }).catch(e => {
+        console.log(e)
+        this.currentlyLoading = false
+      })
     },
     addWidget () {
       this.testLayout.push(this.widgetOpts)
