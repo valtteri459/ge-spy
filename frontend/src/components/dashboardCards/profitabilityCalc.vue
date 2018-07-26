@@ -13,7 +13,7 @@
             <th>Price</th>
           </tr>
           <tr v-for="inbound in inItems" :key="inbound.id">
-            <td><router-link color="light-blue" :to="'/item/' + inbound.id + '/' + inbound.name">{{inbound.name}}</router-link></td>
+            <td><router-link style="color:white" :to="'/item/' + inbound.id + '/' + inbound.name">{{inbound.name}}</router-link></td>
             <td>{{inbound.amount}}</td>
             <td>{{inbound.total}} gp</td>
           </tr>
@@ -28,7 +28,7 @@
             <th>Price</th>
           </tr>
           <tr v-for="inbound in outItems" :key="inbound.id">
-            <td><router-link color="light-blue" :to="'/item/' + inbound.id + '/' + inbound.name">{{inbound.name}}</router-link></td>
+            <td><router-link style="color:white" :to="'/item/' + inbound.id + '/' + inbound.name">{{inbound.name}}</router-link></td>
             <td>{{inbound.amount}}</td>
             <td>{{inbound.total}} gp</td>
           </tr>

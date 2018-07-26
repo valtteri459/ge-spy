@@ -25,8 +25,10 @@ module.exports = (app, db) =>{
         db.query(`SELECT * FROM items`, (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
+            } else {
+              res.send(JSON.stringify(results))
             }
-            res.send(JSON.stringify(results))
+            
         })
     })
     function fullPriceHandler(req, res) {
@@ -39,8 +41,10 @@ module.exports = (app, db) =>{
         JOIN itemPrices ON (items.id = itemPrices.item AND itemPrices.timeStamp = b.recordDate)`, usedTime, (err, results, fields) => {
         if (err) {
           res.status(500).send(err)
+        } else {
+          res.send(JSON.stringify(results ? results : { Unknown: true }))
         }
-        res.send(JSON.stringify(results[0] ? results : { Unknown: true }))
+        
       })
     }
     app.get("/api/allPrices", fullPriceHandler)
@@ -50,8 +54,9 @@ module.exports = (app, db) =>{
         db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND accurate = 1 AND timeStamp < ? ORDER BY timeStamp DESC LIMIT 1000`, [req.params.itemId, req.params.startTime], (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
+            } else {
+              res.send(JSON.stringify(results))
             }
-            res.send(JSON.stringify(results))
         })
     })
     app.get("/api/itemHistoryVolatile/:itemId/:startTime", (req, res) => {
@@ -59,8 +64,10 @@ module.exports = (app, db) =>{
         db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND accurate = 0 AND timeStamp < ? ORDER BY timeStamp DESC  LIMIT 1000`, [req.params.itemId, req.params.startTime], (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
+            } else {
+              res.send(JSON.stringify(results))
             }
-            res.send(JSON.stringify(results))
+            
         })
     })
     app.get("/api/item/:itemId", (req, res) => {
@@ -77,8 +84,10 @@ module.exports = (app, db) =>{
                     AND itemPrices.item = items.id WHERE items.id = ?`, req.params.itemId, (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
+            } else {
+              res.send(JSON.stringify(results[0] || { Unknown: true }))
             }
-            res.send(JSON.stringify(results[0] || {Unknown: true}))
+            
         })
     })
     if(config.proxyMode)

@@ -43,7 +43,7 @@
           Add widget
         </v-card-title>
         <v-card-text>
-          <v-autocomplete :items="registeredWidgets" v-model="widgetName" label="widget type"></v-autocomplete>
+          <v-autocomplete :items="registeredWidgets" v-model="widgetName" label="Widget type"></v-autocomplete>
           <component v-bind:is="widgetName" :prices="priceData" :img="imagePrefix" v-model="widgetOpts"></component>
         </v-card-text>
         <v-card-actions>
@@ -82,7 +82,7 @@ export default {
       widgetName: null,
       widgetOpts: null,
       dashboardSaved: false,
-      registeredWidgets: [{text: 'item price', value: 'itemPriceForm'}, {text: 'profitability calculator', value: 'profitabilityCalcForm'}],
+      registeredWidgets: [{text: 'Item price', value: 'itemPriceForm'}, {text: 'Profitability calculator', value: 'profitabilityCalcForm'}],
       loaded: false,
       testLayout: [
         {'x': 0, 'y': 0, 'w': 2, 'h': 4, 'i': '1', 'element': 'itemPrice', 'opts': {targetItem: 20997}},

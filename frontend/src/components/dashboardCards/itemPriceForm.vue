@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     goToItem () {
-      this.$emit('input', {'x': 0, 'y': 0, 'w': 5, 'h': 4, 'i': new Date().toString(), 'element': 'itemPrice', 'opts': {targetItem: this.selectedItem}})
+      this.$emit('input', {'x': 0, 'y': 0, 'w': 2, 'h': 4, 'i': new Date().toString(), 'element': 'itemPrice', 'opts': {targetItem: this.selectedItem}})
     }
   },
   mounted: function () {
