@@ -3,16 +3,16 @@
      <h4>Profitability widget options</h4>
      <h2>inputs</h2>
      <v-divider></v-divider>
-     <div v-for="inForm in inFields" :key="inForm.id">
-       <v-layout row>
-        <v-flex xs4>
+      <v-layout row wrap>
+        <template v-for="inForm in inFields">
+        <v-flex xs4 :key="inForm.id">
           <v-text-field
             label="Amount"
             v-model="inForm.amount"
             @change="inFieldsCheck()"
           ></v-text-field>
         </v-flex>
-        <v-flex xs8>
+        <v-flex xs8 :key="inForm.id">
           <v-autocomplete
             v-model="inForm.id"
             :items="localPrices"
@@ -39,20 +39,23 @@
             </template>
           </v-autocomplete>
         </v-flex>
-      </v-layout>
-     </div>
+      </template>
+      <v-flex xs12>
+        <v-btn @click="inFields.push({id: null, amount: 1})" icon style="float:right" color="primary"><v-icon>mdi-plus</v-icon></v-btn>
+      </v-flex>
+    </v-layout>
      <h2>outputs</h2>
      <v-divider></v-divider>
-     <div v-for="inForm in outFields" :key="inForm.id">
-       <v-layout row>
-        <v-flex xs4>
+      <v-layout row wrap>
+      <template v-for="inForm in outFields">
+        <v-flex xs4 :key="inForm.id">
           <v-text-field
             label="Amount"
             v-model="inForm.amount"
             @change="outFieldsCheck()"
           ></v-text-field>
         </v-flex>
-        <v-flex xs8>
+        <v-flex xs8 :key="inForm.id">
           <v-autocomplete
             v-model="inForm.id"
             :items="localPrices"
@@ -79,8 +82,11 @@
             </template>
           </v-autocomplete>
         </v-flex>
-      </v-layout>
-     </div>
+      </template>
+      <v-flex xs12>
+        <v-btn @click="outFields.push({id: null, amount: 1})" icon style="float:right" color="primary"><v-icon>mdi-plus</v-icon></v-btn>
+      </v-flex>
+    </v-layout>
    </div>
 </template>
 
@@ -98,32 +104,10 @@ export default {
   methods: {
     inFieldsCheck () {
       console.log('incheck fired')
-      var clength = this.inFields.length
-      if (clength > 2) {
-        var earlierTarget = this.inFields[clength - 2]
-        if (earlierTarget.amount < 1) {
-          this.inFields.pop()
-        }
-      }
-      console.log(this.inFields)
-      if (this.inFields[clength - 1].amount && this.inFields[clength - 1].amount > 0 && this.inFields[clength - 1].id) {
-        this.inFields.push({id: null, amount: null})
-      }
       this.pushOut()
     },
     outFieldsCheck () {
       console.log('outcheck fired')
-      var clength = this.outFields.length
-      if (clength > 2) {
-        var earlierTarget = this.outFields[clength - 2]
-        if (earlierTarget.amount < 1) {
-          this.outFields.pop()
-        }
-      }
-      console.log(this.outFields)
-      if (this.outFields[clength - 1].amount && this.outFields[clength - 1].amount > 0 && this.outFields[clength - 1].id) {
-        this.outFields.push({id: null, amount: null})
-      }
       this.pushOut()
     },
     pushOut () {

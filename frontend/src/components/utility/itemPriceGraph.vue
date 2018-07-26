@@ -108,13 +108,13 @@ export default {
         return cdate
       })
       this.mydatasets[0].data = this.datas.map(elem => {
-        return elem.osbSell
+        return elem.osbSell || null
       })
       this.mydatasets[1].data = this.datas.map(elem => {
-        return elem.osbBuy
+        return elem.osbBuy || null
       })
       this.mydatasets[2].data = this.datas.map(elem => {
-        return elem.osbOverall
+        return elem.osbOverall || null
       })
     }
   },
