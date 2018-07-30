@@ -133,6 +133,10 @@ export default {
   },
   mounted: function () {
     this.updateData()
+    document.title = this.$route.params.name + ' - GE spy'
+  },
+  destroyed: function () {
+    document.title = 'GE spy'
   },
   components: {
     itemPriceGraph,
