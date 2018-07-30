@@ -1,11 +1,13 @@
 <template>
   <v-container pa-0 ma-0 style="width:100%;height:100%;overflow:hidden">
     <div style="display: flex;height:100%">
-      <div style="flex-grow: 1">
+      <div style="flex:1 1 auto;min-width:0;max-width:100%">
         <h2>
           {{opts.duration}} day price of <router-link style="color: white" :to="'/item/' + prices.filter(row => row.id === opts.item)[0].id + '/' + prices.filter(row => row.id === opts.item)[0].name">{{prices.filter(row => row.id === opts.item)[0].name}}</router-link>
         </h2>
-        <itemPriceGraph :datas="graphData" :loading="loading" :hidehead="true"></itemPriceGraph>
+        <div id="catcher">
+          <itemPriceGraph :datas="graphData" :loading="loading" :hidehead="true"></itemPriceGraph>
+        </div>
       </div>
     </div>
   </v-container>
@@ -48,5 +50,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+ #catcher{
+  min-width:0;
+   max-width:100%
+ }
 </style>

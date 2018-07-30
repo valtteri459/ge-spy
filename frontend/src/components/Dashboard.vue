@@ -37,7 +37,7 @@
         <v-card height="100%" class="flexcard">
           <v-card-text class="grow">
             <div style="display: flex">
-              <div style="flex-grow: 1">
+              <div style="flex: 1 1 auto;max-width:100%;overflow:hidden;">
                 <component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts"></component>
               </div>
               <div style="max-width:45px" class="closebtn">
