@@ -37,6 +37,10 @@
                       <td><b>Store price:</b></td><td>{{storePrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}} gp</td>
                       <td><b>GE limit:</b></td><td>{{geLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</td>
                     </tr>
+                    <tr>
+                      <td><b>High alchemy:</b></td><td>{{Math.floor(0.6*storePrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}} gp</td>
+                      <td></td><td></td>
+                    </tr>
                   </table>
               </v-flex>
             </v-layout>
