@@ -1,6 +1,14 @@
 <template>
   <div>
-  <h2>Item price widget options</h2>
+  <h2>Price graph widget options</h2>
+  <h4>duration</h4>
+  <v-radio-group v-model="selectedTime">
+  <v-layout row wrap>
+    <v-flex xs4><v-radio :value="7" label="1 Week"></v-radio></v-flex>
+    <v-flex xs4><v-radio :value="14" label="2 Weeks"></v-radio></v-flex>
+    <v-flex xs4><v-radio :value="30" label="1 Month"></v-radio></v-flex>
+  </v-layout>
+  </v-radio-group>
   <v-autocomplete
     v-model="selectedItem"
     :items="prices"
@@ -35,12 +43,13 @@ export default {
   props: ['value', 'prices', 'img'],
   data () {
     return {
-      selectedItem: ''
+      selectedItem: '',
+      selectedTime: 7
     }
   },
   methods: {
     goToItem () {
-      this.$emit('input', {'x': 0, 'y': 0, 'w': 2, 'h': 4, 'i': new Date().toString(), 'element': 'itemPrice', 'opts': {targetItem: this.selectedItem}})
+      this.$emit('input', {'x': 0, 'y': 0, 'w': 5, 'h': 10, 'i': new Date().toString(), 'element': 'priceGraph', 'opts': {item: this.selectedItem, duration: this.selectedTime}})
     }
   },
   mounted: function () {

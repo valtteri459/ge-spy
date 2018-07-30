@@ -1,7 +1,7 @@
 <template>
    <div>
-     <h4>Profitability widget options</h4>
-     <h2>inputs</h2>
+     <h2>Profitability widget options</h2>
+     <h4>inputs</h4>
      <v-divider></v-divider>
       <v-layout row wrap>
         <template v-for="inForm in inFields">
@@ -44,7 +44,7 @@
         <v-btn @click="inFields.push({id: null, amount: 1})" icon style="float:right" color="primary"><v-icon>mdi-plus</v-icon></v-btn>
       </v-flex>
     </v-layout>
-     <h2>outputs</h2>
+     <h4>outputs</h4>
      <v-divider></v-divider>
       <v-layout row wrap>
       <template v-for="inForm in outFields">

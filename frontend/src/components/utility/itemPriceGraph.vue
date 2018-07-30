@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>
+    <v-card-title v-if="!hidehead">
       <h2>Price graph</h2>
     </v-card-title>
     <v-card-text>
@@ -14,7 +14,7 @@
 <script>
 export default {
   name: 'item',
-  props: ['datas', 'loading'],
+  props: ['datas', 'loading', 'hidehead'],
   data () {
     return {
       mylabels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],

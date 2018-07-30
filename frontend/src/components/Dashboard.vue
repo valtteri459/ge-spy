@@ -81,6 +81,9 @@ import itemPriceForm from './dashboardCards/itemPriceForm'
 import profitabilityCalc from './dashboardCards/profitabilityCalc'
 import profitabilityCalcForm from './dashboardCards/profitabilityCalcForm'
 
+import priceGraph from './dashboardCards/priceGraph'
+import priceGraphForm from './dashboardCards/priceGraphForm'
+
 var GridLayout = grids.GridLayout
 var GridItem = grids.GridItem
 export default {
@@ -95,7 +98,11 @@ export default {
       widgetOpts: null,
       currentlyLoading: false,
       dashboardSaved: false,
-      registeredWidgets: [{text: 'Item price', value: 'itemPriceForm'}, {text: 'Profitability calculator', value: 'profitabilityCalcForm'}],
+      registeredWidgets: [
+        {text: 'Item price', value: 'itemPriceForm'},
+        {text: 'Profitability calculator', value: 'profitabilityCalcForm'},
+        {text: 'Price chart', value: 'priceGraphForm'}
+      ],
       loaded: false,
       testLayout: [
         {'x': 0, 'y': 0, 'w': 2, 'h': 4, 'i': '1', 'element': 'itemPrice', 'opts': {targetItem: 20997}},
@@ -152,7 +159,9 @@ export default {
     itemPrice,
     itemPriceForm,
     profitabilityCalc,
-    profitabilityCalcForm
+    profitabilityCalcForm,
+    priceGraph,
+    priceGraphForm
   }
 }
 </script>
