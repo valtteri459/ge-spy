@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import Inventory from '@/components/Inventory'
 import ItemSearch from '@/components/ItemSearch'
-import InvHistory from '@/components/InvHistory'
 import Transactions from '@/components/Transactions'
 import Item from '@/components/Item'
 
@@ -27,10 +26,6 @@ export default new Router({
       path: '/item/:id/:name',
       name: 'item',
       component: Item
-    }, {
-      path: '/valueHistory',
-      name: 'valueHitory',
-      component: InvHistory
     }, {
       path: '/transactions',
       name: 'transactions',

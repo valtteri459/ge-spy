@@ -85,13 +85,6 @@ export default {
         title: 'Inventory',
         items: [
           { title: 'Current inventory', target: '/inventory' },
-          { title: 'Value history', target: '/valueHistory' }
-        ]
-      },
-      {
-        action: 'mdi-cart',
-        title: 'Transactions',
-        items: [
           { title: 'Transaction history', target: '/transactions' }
         ]
       },
