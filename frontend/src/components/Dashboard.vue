@@ -41,7 +41,7 @@
                 <component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts"></component>
               </div>
               <div style="max-width:45px" class="closebtn">
-                <v-btn flat small left style="min-width: 0" title="delete">x</v-btn>
+                <v-btn flat small left style="min-width: 0" title="delete" @click="testLayout.splice(testLayout.indexOf(item), 1)">x</v-btn>
               </div>
             </div>
           </v-card-text>
