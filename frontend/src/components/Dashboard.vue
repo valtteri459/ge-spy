@@ -35,8 +35,16 @@
         :key="item.i"
         style="overflow: hidden">
         <v-card height="100%" class="flexcard">
-          <v-card-text class="grow"><component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts"></component></v-card-text>
-          <v-card-actions><v-btn flat color="orange" @click="testLayout.splice(testLayout.indexOf(item), 1)">Remove</v-btn></v-card-actions>
+          <v-card-text class="grow">
+            <div style="display: flex">
+              <div style="flex-grow: 1">
+                <component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts"></component>
+              </div>
+              <div style="max-width:45px" class="closebtn">
+                <v-btn flat small left style="min-width: 0" title="delete">x</v-btn>
+              </div>
+            </div>
+          </v-card-text>
         </v-card>
       </GridItem>
     </GridLayout>

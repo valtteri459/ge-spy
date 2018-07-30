@@ -51,7 +51,7 @@ module.exports = (app, db) =>{
     app.get("/api/allPrices/:time", fullPriceHandler)
     app.get("/api/itemHistory/:itemId/:startTime", (req, res) => {
         //gets price history of item from startTime to endTime
-        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND accurate = 1 AND timeStamp < ? ORDER BY timeStamp DESC LIMIT 1000`, [req.params.itemId, req.params.startTime], (err, results, fields) => {
+        db.query(`SELECT timeStamp, osbOverall, osbBuy, osbSell, buy_quantity, sell_quantity FROM itemPrices WHERE item = ? AND accurate = 1 AND timeStamp > ? ORDER BY timeStamp ASC LIMIT 1000`, [req.params.itemId, req.params.startTime], (err, results, fields) => {
             if (err) {
                 res.status(500).send(err)
             } else {

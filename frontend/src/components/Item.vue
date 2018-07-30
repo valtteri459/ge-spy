@@ -44,6 +44,12 @@
         </v-card>
       </v-flex>
       <v-flex xs12 pa-2>
+        <h4>Graph time</h4>
+        <v-btn color="primary" @click="setWeek()" :disabled="selected === 1">Week</v-btn>
+        <v-btn color="primary" @click="setTwoWeeks()" :disabled="selected === 2">2 Weeks</v-btn>
+        <v-btn color="primary" @click="setMonth()" :disabled="selected === 3">Month</v-btn>
+      </v-flex>
+      <v-flex xs12 pa-2>
         <itemPriceGraph :datas="graphData" :loading="loading"></itemPriceGraph>
       </v-flex>
       <v-flex xs12 pa-2>
@@ -73,16 +79,38 @@ export default {
       sell_quantity: 0,
       imgPrfx: '',
       geLimit: 0,
-      graphData: []
+      graphData: [],
+      graphDataOriginal: [],
+      selected: 3
     }
   },
   methods: {
+    setWeek () {
+      var fetchStartDate = new Date()
+      fetchStartDate.setDate(fetchStartDate.getDate() - 7)
+      fetchStartDate = fetchStartDate.getTime()
+      this.graphData = this.graphDataOriginal.filter(elem => elem.timeStamp > fetchStartDate)
+      this.selected = 1
+    },
+    setTwoWeeks () {
+      var fetchStartDate = new Date()
+      fetchStartDate.setDate(fetchStartDate.getDate() - 14)
+      fetchStartDate = fetchStartDate.getTime()
+      this.graphData = this.graphDataOriginal.filter(elem => elem.timeStamp > fetchStartDate)
+      this.selected = 2
+    },
+    setMonth () {
+      this.graphData = [ ...this.graphDataOriginal ]
+      this.selected = 3
+    },
     updateData () {
       this.loading = true
       this.axios.get('/api/imagePrefix').then(resultData => {
         this.imgPrfx = resultData.data.imagePrefix
         this.axios.get('/api/item/' + this.$route.params.id).then(resData => {
-          this.axios.get('/api/itemHistory/' + this.$route.params.id + '/' + new Date().getTime()).then(graphData => {
+          var fetchStartDate = new Date()
+          fetchStartDate.setDate(fetchStartDate.getDate() - 30)
+          this.axios.get('/api/itemHistory/' + this.$route.params.id + '/' + fetchStartDate.getTime()).then(graphData => {
             var elem = resData.data
             this.name = elem.name
             this.member = elem.members === 1
@@ -95,7 +123,8 @@ export default {
             this.sell_quantity = elem.sell_quantity
             var limitSearch = limits.filter(filterRow => filterRow.item === elem.name)[0]
             this.geLimit = limitSearch ? limitSearch.limit : 'Unknown'
-            this.graphData = graphData.data
+            this.graphData = [ ...graphData.data ]
+            this.graphDataOriginal = [ ...graphData.data ]
             this.loading = false
           }).catch(e => console.log(e))
         }).catch(e => console.log(e))

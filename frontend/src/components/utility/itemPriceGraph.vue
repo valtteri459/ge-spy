@@ -5,7 +5,7 @@
     </v-card-title>
     <v-card-text>
       <div style='width: 100%;max-width:1700px; overflow:hidden' v-if='!loading'>
-        <chartjs-line :labels='mylabels' :datasets='mydatasets' :option="myoption"></chartjs-line>
+        <chartjs-line :labels='mylabels' :datasets='mydatasets' :option="myoption" :bind="true"></chartjs-line>
       </div>
     </v-card-text>
   </v-card>
