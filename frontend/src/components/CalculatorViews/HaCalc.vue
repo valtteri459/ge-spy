@@ -21,7 +21,7 @@
           v-bind:pagination.sync="pagination"
         >
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.name }}</td>
+            <td><router-link style="color: white" :to="'/item/' + props.item.id + '/' + props.item.name">{{ props.item.name }}</router-link></td>
             <td class="text-xs-right">{{ formatNum(props.item.HAPrice) }} gp</td>
             <td class="text-xs-right">{{ props.item.osbBuyText }} gp</td>
             <td class="text-xs-right">{{ formatNum(props.item.profit) }} gp</td>
@@ -45,7 +45,7 @@ export default {
   data () {
     return {
       search: '',
-      pagination: {'sortBy': 'profit', 'descending': false, 'rowsPerPage': 25},
+      pagination: {'sortBy': 'profit', 'descending': true, 'rowsPerPage': 25},
       headers: [
         {
           text: 'Name',
