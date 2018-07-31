@@ -6,6 +6,13 @@ import ItemSearch from '@/components/ItemSearch'
 import Transactions from '@/components/Transactions'
 import Item from '@/components/Item'
 
+import CalcWrapper from '@/components/CalculatorWrapper'
+import flip from '@/components/CalculatorViews/FlipCalc'
+import ha from '@/components/CalculatorViews/HaCalc'
+import herb from '@/components/CalculatorViews/HerbCalc'
+import lunar from '@/components/CalculatorViews/LunarCalc'
+import tree from '@/components/CalculatorViews/TreeCalc'
+
 Vue.use(Router)
 
 export default new Router({
@@ -30,6 +37,28 @@ export default new Router({
       path: '/transactions',
       name: 'transactions',
       component: Transactions
+    }, {
+      path: '/calculators',
+      name: 'Calculators',
+      component: CalcWrapper,
+      children: [
+        {
+          path: 'flip',
+          component: flip
+        }, {
+          path: 'ha',
+          component: ha
+        }, {
+          path: 'herb',
+          component: herb
+        }, {
+          path: 'lunar',
+          component: lunar
+        }, {
+          path: 'tree',
+          component: tree
+        }
+      ]
     }
   ]
 })

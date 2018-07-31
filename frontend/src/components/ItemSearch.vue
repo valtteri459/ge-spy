@@ -56,6 +56,7 @@ export default {
     }
   },
   mounted: function () {
+    document.title = 'Item search - GE Spy'
     this.loadingData = true
     this.axios.get('/api/imagePrefix').then(resultData => {
       var imgPrfx = resultData.data.imagePrefix
@@ -78,6 +79,9 @@ export default {
         this.loadingData = false
       }).catch(e => console.log(e))
     }).catch(e => console.log(e))
+  },
+  destroyed: function () {
+    document.title = 'GE Spy'
   }
 }
 </script>

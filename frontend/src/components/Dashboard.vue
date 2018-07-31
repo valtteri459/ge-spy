@@ -150,8 +150,12 @@ export default {
       this.dashboardSaved = true
     }
   },
-  created: function () {
+  mounted: function () {
     this.getData()
+    document.title = 'Dashboard - GE Spy'
+  },
+  destroyed: function () {
+    document.title = 'GE Spy'
   },
   components: {
     GridLayout,

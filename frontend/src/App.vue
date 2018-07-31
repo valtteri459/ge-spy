@@ -92,11 +92,11 @@ export default {
         action: 'mdi-calculator',
         title: 'Cost/profit calculators',
         items: [
-          { title: 'High alchemy' },
-          { title: 'Lunar spellbook' },
-          { title: 'Herb farming' },
-          { title: 'Trees/Fruit trees' },
-          { title: 'Item flipping' }
+          { title: 'High alchemy', target: '/calculators/ha' },
+          { title: 'Lunar spellbook', target: '/calculators/lunar' },
+          { title: 'Herb farming', target: '/calculators/herb' },
+          { title: 'Trees/Fruit trees', target: '/calculators/tree' },
+          { title: 'Item flipping', target: '/calculators/flip' }
         ]
       }
     ]

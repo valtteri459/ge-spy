@@ -2,7 +2,7 @@
   <div>
   <h2>Price graph widget options</h2>
   <h4>duration</h4>
-  <v-radio-group v-model="selectedTime">
+  <v-radio-group v-model="selectedTime" @change="goToItem()">
   <v-layout row wrap>
     <v-flex xs4><v-radio :value="7" label="1 Week"></v-radio></v-flex>
     <v-flex xs4><v-radio :value="14" label="2 Weeks"></v-radio></v-flex>
