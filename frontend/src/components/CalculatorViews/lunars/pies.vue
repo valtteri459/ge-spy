@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-bottom:15px">
+  <div style="padding:15px">
     <div style="float:left;width:100%">
       <span style="float:left"><h2>casts per hour: </h2></span>
       <span style="display:inline;width:120px;float:left"><v-text-field

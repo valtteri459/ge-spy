@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12>
+    <v-flex xs12 pa-2 pr-3>
       <h3>Staff runes</h3>
         <div class="staffHolder">
           <v-checkbox label="Earth" v-model="elements[557]"></v-checkbox>
