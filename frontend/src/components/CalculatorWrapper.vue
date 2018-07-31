@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class='page' style="padding: 0px">
+  <v-container class='page' style="padding: 0px">
     <v-layout>
       <v-flex xs12>
         <v-card>
