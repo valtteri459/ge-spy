@@ -1,7 +1,7 @@
 <template>
   <v-container pa-0 ma-0>
     <div style="display: flex;height:100%">
-      <div class="imageTarget" v-if="self.w > 4">
+      <div class="imageTarget" v-if="self.w > 3">
         <v-card-media
           :src="img+opts.targetItem"
           height="75px"
