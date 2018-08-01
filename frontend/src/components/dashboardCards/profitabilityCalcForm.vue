@@ -111,7 +111,7 @@ export default {
       this.pushOut()
     },
     pushOut () {
-      this.$emit('input', {'x': 0, 'y': 0, 'w': 5, 'h': 10, 'i': new Date().toString(), 'element': 'profitabilityCalc', 'opts': {ins: this.inFields, outs: this.outFields}})
+      this.$emit('input', {'x': 0, 'y': 0, 'w': 10, 'h': 10, 'i': new Date().toString(), 'element': 'profitabilityCalc', 'opts': {ins: this.inFields, outs: this.outFields}})
     }
   },
   mounted: function () {

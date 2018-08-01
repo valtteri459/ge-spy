@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     goToItem () {
-      this.$emit('input', {'x': 0, 'y': 0, 'w': 5, 'h': 10, 'i': new Date().toString(), 'element': 'priceGraph', 'opts': {item: this.selectedItem, duration: this.selectedTime}})
+      this.$emit('input', {'x': 0, 'y': 0, 'w': 10, 'h': 10, 'i': new Date().toString(), 'element': 'priceGraph', 'opts': {item: this.selectedItem, duration: this.selectedTime}})
     }
   },
   mounted: function () {
