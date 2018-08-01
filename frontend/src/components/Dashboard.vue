@@ -18,7 +18,7 @@
     <GridLayout
       style="margin:24px"
       :layout="testLayout"
-      :col-num="12"
+      :col-num="24"
       :row-height="30"
       :is-draggable="true"
       :is-resizable="true"
@@ -35,16 +35,14 @@
         :key="item.i"
         style="overflow: hidden">
         <v-card height="100%" class="flexcard">
-          <v-card-text class="grow">
-            <div style="display: flex">
-              <div style="flex: 1 1 auto;max-width:100%;overflow:hidden;">
-                <component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts"></component>
-              </div>
-              <div style="max-width:45px" class="closebtn">
-                <v-btn flat small left style="min-width: 0" title="delete" @click="testLayout.splice(testLayout.indexOf(item), 1)">x</v-btn>
-              </div>
+          <div style="display: flex">
+            <div style="flex: 1 1 auto;max-width:100%;overflow:hidden;box-sizing:border-box;padding:15px">
+              <component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts" :self="item"></component>
             </div>
-          </v-card-text>
+            <div style="max-width:35px" class="closebtn">
+              <v-btn flat small left style="min-width: 0;position:relative;left:-5px" title="delete" @click="testLayout.splice(testLayout.indexOf(item), 1)">x</v-btn>
+            </div>
+          </div>
         </v-card>
       </GridItem>
     </GridLayout>

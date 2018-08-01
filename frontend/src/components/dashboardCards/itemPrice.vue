@@ -1,7 +1,7 @@
 <template>
   <v-container pa-0 ma-0>
     <div style="display: flex;height:100%">
-      <div style="width:75px;min-width:75px">
+      <div class="imageTarget" v-if="self.w > 4">
         <v-card-media
           :src="img+opts.targetItem"
           height="75px"
@@ -22,7 +22,7 @@
 <script>
 export default {
   name: 'Inventory',
-  props: ['prices', 'img', 'opts'],
+  props: ['prices', 'img', 'opts', 'self'],
   data () {
     return {
     }
@@ -32,5 +32,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.imageTarget {
+  width:75px;
+  min-width:75px;
+}
 </style>

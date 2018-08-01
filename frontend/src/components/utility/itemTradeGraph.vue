@@ -66,7 +66,12 @@ export default {
         responsive: true,
         maintainAspectRatio: true,
         tooltips: {
-          mode: 'label'
+          'mode': 'label',
+          callbacks: {
+            label: (tooltipItem, data) => {
+              return data.datasets[tooltipItem.datasetIndex].label + ': ' + this.formatNum(tooltipItem.yLabel)
+            }
+          }
         },
         title: {
           display: false
@@ -92,6 +97,9 @@ export default {
       this.mydatasets[1].data = this.datas.map(elem => {
         return elem.sell_quantity
       })
+    },
+    formatNum (inNum) {
+      return inNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   },
   watch: {
