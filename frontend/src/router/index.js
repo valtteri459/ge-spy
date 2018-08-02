@@ -11,6 +11,8 @@ import flip from '@/components/CalculatorViews/FlipCalc'
 import ha from '@/components/CalculatorViews/HaCalc'
 import herb from '@/components/CalculatorViews/HerbCalc'
 import lunar from '@/components/CalculatorViews/LunarCalc'
+import potions from '@/components/CalculatorViews/potions'
+import crafting from '@/components/CalculatorViews/crafting'
 
 Vue.use(Router)
 
@@ -53,6 +55,12 @@ export default new Router({
         }, {
           path: 'lunar',
           component: lunar
+        }, {
+          path: 'potions',
+          component: potions
+        }, {
+          path: 'crafting',
+          component: crafting
         }
       ]
     }

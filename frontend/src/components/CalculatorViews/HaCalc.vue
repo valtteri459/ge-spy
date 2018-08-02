@@ -22,11 +22,11 @@
         >
           <template slot="items" slot-scope="props">
             <td><router-link style="color: white" :to="'/item/' + props.item.id + '/' + props.item.name">{{ props.item.name }}</router-link></td>
-            <td class="text-xs-right">{{ formatNum(props.item.HAPrice) }} gp</td>
-            <td class="text-xs-right">{{ props.item.osbBuyText }} gp</td>
-            <td class="text-xs-right">{{ formatNum(props.item.profit) }} gp</td>
-            <td class="text-xs-right">{{ props.item.limits }}</td>
-            <td class="text-xs-right">{{ props.item.active }}</td>
+            <td style="text-align:center">{{ formatNum(props.item.HAPrice) }} gp</td>
+            <td style="text-align:center">{{ props.item.osbBuyText }} gp</td>
+            <td style="text-align:center">{{ formatNum(props.item.profit) }} gp</td>
+            <td style="text-align:center">{{ props.item.limits }}</td>
+            <td style="text-align:center">{{ props.item.active }}</td>
           </template>
           <v-alert slot="no-results" :value="true" color="error" icon="warning">
             Your search for "{{ search }}" found no results.
@@ -53,11 +53,11 @@ export default {
           sortable: true,
           value: 'name'
         },
-        { text: 'HA price', value: 'HAPrice' },
-        { text: 'GE price (buy price)', value: 'osbBuy' },
-        { text: 'HA profitability', value: 'profit' },
-        { text: 'GE limit', value: 'limits' },
-        { text: 'active?', value: 'active' }
+        { text: 'HA price', value: 'HAPrice', align: 'center' },
+        { text: 'GE price (buy price)', value: 'osbBuy', align: 'center' },
+        { text: 'HA profitability', value: 'profit', align: 'center' },
+        { text: 'GE limit', value: 'limits', align: 'center' },
+        { text: 'active?', value: 'active', align: 'center' }
       ],
       osrsItems: []
     }

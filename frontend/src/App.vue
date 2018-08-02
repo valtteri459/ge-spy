@@ -95,6 +95,8 @@ export default {
           { title: 'High alchemy', target: '/calculators/ha' },
           { title: 'Lunar spellbook', target: '/calculators/lunar' },
           { title: 'Herb farming', target: '/calculators/herb' },
+          { title: 'Herblore', target: '/calculators/potions' },
+          { title: 'Crafting', target: '/calculators/crafting' },
           { title: 'Item flipping', target: '/calculators/flip' }
         ]
       }

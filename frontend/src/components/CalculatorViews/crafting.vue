@@ -40,7 +40,7 @@
 <script>
 import limits from '@/assets/limits.js'
 export default {
-  name: 'HaCalc',
+  name: 'craftCalc',
   props: ['prices', 'img'],
   data () {
     return {
@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted: function () {
-    document.title = 'HA calculator - GE Spy'
+    document.title = 'crafting calculator - GE Spy'
     var natPrice = this.prices.filter(row => row.id === 561)[0].osbOverall
     var citems = this.prices.filter(row => Math.floor(0.6 * row.storePrice) > natPrice && row.osbBuy > 0)
     citems.forEach(elem => {
