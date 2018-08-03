@@ -40,7 +40,7 @@
 <script>
 import limits from '@/assets/limits.js'
 export default {
-  name: 'HaCalc',
+  name: 'HerbCalc',
   props: ['prices', 'img'],
   data () {
     return {
