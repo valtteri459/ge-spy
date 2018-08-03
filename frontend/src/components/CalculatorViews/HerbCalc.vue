@@ -115,57 +115,57 @@ export default {
         level: 44,
         seed: 5297,
         herb: 209,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 43,
+        xpHarvest: 48.5
       },
       {
         level: 50,
         seed: 5298,
         herb: 211,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 54.5,
+        xpHarvest: 61.5
       },
       {
         level: 56,
         seed: 5299,
         herb: 213,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 69,
+        xpHarvest: 78
       },
       {
         level: 62,
         seed: 5300,
         herb: 3051,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 87.5,
+        xpHarvest: 98.5
       },
       {
         level: 67,
         seed: 5301,
         herb: 215,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 106.5,
+        xpHarvest: 120
       },
       {
         level: 73,
         seed: 5302,
         herb: 2485,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 134.5,
+        xpHarvest: 151.5
       },
       {
         level: 79,
         seed: 5303,
         herb: 217,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 170.5,
+        xpHarvest: 192
       },
       {
         level: 85,
         seed: 5304,
         herb: 219,
-        xpPlant: 0,
-        xpHarvest: 0
+        xpPlant: 199.5,
+        xpHarvest: 224.5
       }
     ]
     citems.forEach(elem => {
