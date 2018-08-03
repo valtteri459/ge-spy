@@ -97,7 +97,9 @@ export default {
           { title: 'Herb farming', target: '/calculators/herb' },
           { title: 'Herblore', target: '/calculators/potions' },
           { title: 'Crafting', target: '/calculators/crafting' },
-          { title: 'Item flipping', target: '/calculators/flip' }
+          { title: 'Item flipping (soon)'
+          // target: '/calculators/flip'
+          }
         ]
       }
     ]

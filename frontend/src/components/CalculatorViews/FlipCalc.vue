@@ -10,7 +10,7 @@
               </v-flex>
               <v-flex xs8>
                 <div class="text-xs-right">
-                  <div class="headline">Here will be the current user inventory 1</div>
+                  <div class="headline">Here will be an item flipping guide</div>
                   <div class="display-2">45</div>
                 </div>
               </v-flex>
