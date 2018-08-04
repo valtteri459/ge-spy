@@ -42,6 +42,7 @@
               </tr>
             </table>
             <h4>Results</h4>
+            gp offset (lost/gained gp): {{formatNum(this.opts.costOffset)}} gp<br/>
             gained xp: {{opts.gainedXp}}<br/>
             gp delta: {{formatNum(this.sum)}} gp
           </v-card-text>
