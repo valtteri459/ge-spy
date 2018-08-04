@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'Inventory',
+  name: 'IP',
   props: ['prices', 'img', 'opts', 'self'],
   data () {
     return {

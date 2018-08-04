@@ -55,7 +55,7 @@
 
 <script>
 export default {
-  name: 'Inventory',
+  name: 'gpXp',
   props: ['prices', 'img', 'opts', 'self'],
   data () {
     return {
@@ -66,6 +66,7 @@ export default {
     }
   },
   mounted: function () {
+    this.sum = this.opts.costOffset || 0
     this.inItems = this.opts.ins.filter(row => {
       if (row.id === null || row.amount === null) {
         return false
@@ -93,7 +94,7 @@ export default {
   },
   computed: {
     calcedXpGp: function () {
-      return this.sum / this.opts.gainedXp
+      return (this.sum / this.opts.gainedXp).toFixed(2)
     }
   },
   methods: {

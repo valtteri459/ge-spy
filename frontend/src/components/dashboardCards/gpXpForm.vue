@@ -1,8 +1,12 @@
 <template>
    <div>
      <h2>gp/xp widget options</h2>
-     <v-text-field v-model="name" label="Method name"></v-text-field>
-     <v-text-field v-model="xprates" type="number" label="gained XP"></v-text-field>
+     <v-text-field v-model="name" label="Method name" @change="outFieldsCheck()"></v-text-field>
+     <v-text-field v-model="xprates" type="number" label="gained XP" @change="outFieldsCheck()"></v-text-field>
+     <v-tooltip right>
+      <v-text-field slot="activator" v-model="costOffset" type="number" label="GP offset" @change="outFieldsCheck()"></v-text-field>
+      <span>Positive if you get gold, negative if you loose gold (i.e alching is positive)</span>
+     </v-tooltip>
      <h4>inputs</h4>
      <v-divider></v-divider>
       <v-layout row wrap>
@@ -94,7 +98,7 @@
 
 <script>
 export default {
-  name: 'ProfitabilityCalcForm',
+  name: 'gpXpForm',
   props: ['value', 'prices', 'img'],
   data () {
     return {
@@ -102,7 +106,8 @@ export default {
       outFields: [{id: null, amount: 1}],
       localPrices: [],
       xprates: 0,
-      name: ''
+      name: '',
+      costOffset: 0
     }
   },
   methods: {
@@ -115,7 +120,7 @@ export default {
       this.pushOut()
     },
     pushOut () {
-      this.$emit('input', {'x': 0, 'y': 0, 'w': 10, 'h': 10, 'i': new Date().toString(), 'element': 'gpXp', 'opts': {customName: this.name, gainedXp: this.xprates, ins: this.inFields, outs: this.outFields}})
+      this.$emit('input', {'x': 0, 'y': 0, 'w': 5, 'h': 4, 'i': new Date().toString(), 'element': 'gpXp', 'opts': {costOffset: this.costOffset, customName: this.name, gainedXp: this.xprates, ins: this.inFields, outs: this.outFields}})
     }
   },
   mounted: function () {

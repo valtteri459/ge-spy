@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'Inventory',
+  name: 'IPF',
   props: ['value', 'prices', 'img'],
   data () {
     return {
