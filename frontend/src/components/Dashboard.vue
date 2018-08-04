@@ -82,6 +82,9 @@ import profitabilityCalcForm from './dashboardCards/profitabilityCalcForm'
 import priceGraph from './dashboardCards/priceGraph'
 import priceGraphForm from './dashboardCards/priceGraphForm'
 
+import gpXp from './dashboardCards/gpXp'
+import gpXpForm from './dashboardCards/gpXpForm'
+
 var GridLayout = grids.GridLayout
 var GridItem = grids.GridItem
 export default {
@@ -99,7 +102,8 @@ export default {
       registeredWidgets: [
         {text: 'Item price', value: 'itemPriceForm'},
         {text: 'Profitability calculator', value: 'profitabilityCalcForm'},
-        {text: 'Price chart', value: 'priceGraphForm'}
+        {text: 'Price chart', value: 'priceGraphForm'},
+        {text: 'GP/xp widget', value: 'gpXpForm'}
       ],
       loaded: false,
       testLayout: [
@@ -163,7 +167,9 @@ export default {
     profitabilityCalc,
     profitabilityCalcForm,
     priceGraph,
-    priceGraphForm
+    priceGraphForm,
+    gpXp,
+    gpXpForm
   }
 }
 </script>
