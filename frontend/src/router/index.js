@@ -13,6 +13,7 @@ import herb from '@/components/CalculatorViews/HerbCalc'
 import lunar from '@/components/CalculatorViews/LunarCalc'
 import potions from '@/components/CalculatorViews/potions'
 import crafting from '@/components/CalculatorViews/crafting'
+import changes from '@/components/Changes'
 
 Vue.use(Router)
 
@@ -63,6 +64,10 @@ export default new Router({
           component: crafting
         }
       ]
+    }, {
+      path: '/changes',
+      name: 'changes',
+      component: changes
     }
   ]
 })

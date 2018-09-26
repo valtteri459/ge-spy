@@ -99,7 +99,8 @@ export default {
           { title: 'Crafting', target: '/calculators/crafting' },
           { title: 'Item flipping (soon)'
           // target: '/calculators/flip'
-          }
+          },
+          { title: 'Changelog', target: '/changes' }
         ]
       }
     ]
