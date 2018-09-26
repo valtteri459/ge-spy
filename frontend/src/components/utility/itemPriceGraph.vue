@@ -1,11 +1,13 @@
 <template>
-  <v-card>
+  <v-card style="height: 100%;display:flex;flex-direction:column">
     <v-card-title v-if="!hidehead">
       <h2>Price graph</h2>
     </v-card-title>
-    <v-card-text>
-      <div style='width: 100%;max-width:1700px; overflow:hidden;min-width:0' v-if='!loading'>
-        <chartjs-line :labels='mylabels' :datasets='mydatasets' :option="myoption" :bind="true"></chartjs-line>
+    <v-card-text style="flex-grow:1;display:flex;flex-direction:column">
+      <div style='width: 100%;flex-grow:1;display:flex;flex-direction:column' v-if='!loading'>
+        <div style="flex-grow:1;padding:0px;margin:0px;border:0px;display: flex;">
+          <chartjs-line :labels='mylabels' :datasets='mydatasets' :option="myoption" :bind="true" style="flex:1;width:100%;"></chartjs-line>
+        </div>
       </div>
     </v-card-text>
   </v-card>
@@ -86,7 +88,7 @@ export default {
       }],
       myoption: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         tooltips: {
           'mode': 'label',
           callbacks: {
@@ -160,5 +162,11 @@ export default {
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
-
+* {
+   box-sizing: border-box;
+  min-width:0;
+   max-width:100%;
+   max-height:100%;
+  overflow:hidden;
+ }
 </style>

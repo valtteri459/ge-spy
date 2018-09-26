@@ -3,22 +3,29 @@
     <v-layout row wrap>
       <v-flex xs12 pa-2>
         <h2>Recent changes</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Commit</th>
-                    <th>User</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="elem in ghubReturn" :key="elem.sha">
-                    <td><a :href="elem.url" target="_blank">{{elem.commit.message || "unknown"}}</a></td>
-                    <td><a :href="elem.author.html_url" target="_blank">{{elem.author.login}}</a></td>
-                    <td>{{elem.commit.author.date || "unknown"}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <v-list two-line>
+          <v-list-tile
+            v-for="elem in ghubReturn"
+            :key="elem.sha"
+            avatar
+            href="elem.html_url"
+          >
+            <v-list-tile-avatar>
+              <img :src="elem.author.avatar_url"/>
+            </v-list-tile-avatar>
+
+            <v-list-tile-content>
+              <v-list-tile-title>{{elem.commit.message || "unknown"}}</v-list-tile-title>
+              <v-list-tile-sub-title>{{elem.author.login}} - {{elem.commit.author.date.split("T")[0] || "unknown"}}</v-list-tile-sub-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <v-btn icon ripple>
+                <v-icon color="grey lighten-1">info</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
       </v-flex>
     </v-layout>
   </v-container>

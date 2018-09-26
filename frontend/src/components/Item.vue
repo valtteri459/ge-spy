@@ -54,10 +54,10 @@
         <v-btn color="primary" @click="setMonth()" :disabled="selected === 3">Month</v-btn>
       </v-flex>
       <v-flex xs12 pa-2>
-        <itemPriceGraph :datas="graphData" :loading="loading"></itemPriceGraph>
+        <itemPriceGraph :datas="graphData" :loading="loading" style="height:550px;"></itemPriceGraph>
       </v-flex>
       <v-flex xs12 pa-2>
-        <itemTradeGraph :datas="graphData" :loading="loading"></itemTradeGraph>
+        <itemTradeGraph :datas="graphData" :loading="loading" style="height:550px;"></itemTradeGraph>
       </v-flex>
     </v-layout>
   </v-container>

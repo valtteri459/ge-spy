@@ -35,7 +35,7 @@
         :key="item.i"
         style="overflow: hidden">
         <v-card height="100%" class="flexcard">
-          <div style="display: flex">
+          <div style="display: flex; height:100%">
             <div style="flex: 1 1 auto;max-width:100%;overflow:hidden;box-sizing:border-box;padding:15px">
               <component v-bind:is="item.element" :prices="priceData" :img="imagePrefix" :opts="item.opts" :self="item"></component>
             </div>
