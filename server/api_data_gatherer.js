@@ -1,4 +1,4 @@
-console.log("data gatherer enableb")
+console.log("data gatherer imported")
 var axios = require("axios")
 module.exports = {
     loadData: (db) => {
