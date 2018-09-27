@@ -8,7 +8,7 @@
             v-for="elem in ghubReturn"
             :key="elem.sha"
             avatar
-            href="elem.html_url"
+            :href="elem.html_url"
           >
             <v-list-tile-avatar>
               <img :src="elem.author.avatar_url"/>
