@@ -9,6 +9,7 @@
             :key="elem.sha"
             avatar
             :href="elem.html_url"
+            target="_blanks"
           >
             <v-list-tile-avatar>
               <img :src="elem.author.avatar_url"/>
