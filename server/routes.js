@@ -13,7 +13,7 @@ module.exports = (app, db) =>{
             axios.get('http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=2').then(elem =>{
                 res.send(JSON.stringify({imagePrefix: elem.data.item.icon_large.slice(0, -1).replace('http://', 'https://')}))
                 lastScan = new Date().getTime()
-                lastRes = elem.data.item.icon_large.slice(0, -1)
+                lastRes = elem.data.item.icon_large.slice(0, -1).replace('http://', 'https://')
             })
         }
         else
