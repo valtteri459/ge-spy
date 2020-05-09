@@ -56,7 +56,7 @@
             <v-list-item-content>
               <v-list-item-title v-html="data.item.name"></v-list-item-title>
               <v-list-item-subtitle>
-                {{numberFormatter(data.item.osbOverall)}} Coins | {{numberFormatter(data.item.osbBuy)}} Coins | {{numberFormatter(data.item.osbSell)}} Coins
+                → {{numberFormatter(data.item.osbOverall)}} Coins ↓ {{numberFormatter(data.item.osbBuy)}} Coins ↑ {{numberFormatter(data.item.osbSell)}} Coins
               </v-list-item-subtitle>
             </v-list-item-content>
           </template>
@@ -91,6 +91,16 @@ export default {
     numberFormatter: helpers.numberFormatter
   },
   watch: {
+    selectedItem (val) {
+      if (val) {
+        console.log(val)
+        /* HANDLE OPENING ITEM TAB HERE */
+        this.$nextTick(() => {
+          this.selectedItem = null
+          this.search = null
+        })
+      }
+    },
     search (val) {
       // Items have already been loaded
       if (this.plausibleItems.length > 0) return
