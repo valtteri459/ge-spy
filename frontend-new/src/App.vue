@@ -31,7 +31,6 @@
       dense
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>GE Spy</v-toolbar-title>
       <v-toolbar-title>
         <v-autocomplete
           v-model="selectedItem"
@@ -62,6 +61,7 @@
           </template>
         </v-autocomplete>
       </v-toolbar-title>
+      <navigationTabs></navigationTabs>
     </v-app-bar>
 
     <v-content>
@@ -78,6 +78,7 @@
 <script>
 import itemsRepository from './repositories/items'
 import helpers from './components/helpers'
+import navigationTabs from './components/navigationTabs.vue'
 export default {
   data: () => ({
     drawer: null,
@@ -89,6 +90,9 @@ export default {
   }),
   methods: {
     numberFormatter: helpers.numberFormatter
+  },
+  components: {
+    navigationTabs
   },
   watch: {
     selectedItem (val) {

@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Changelog from '../views/Changelog.vue'
 import Item from '../views/Item.vue'
 
+import store from '../store'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +36,11 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  store.dispatch('navTabs/openTab', to)
+  next()
 })
 
 export default router

@@ -64,6 +64,9 @@ export default {
   },
   destroyed: function () {
   },
+  activated () {
+    this.$store.dispatch('navTabs/setTabName', 'Information')
+  },
   components: {
   }
 }
