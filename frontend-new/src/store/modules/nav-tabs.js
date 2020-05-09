@@ -59,6 +59,7 @@ const navTabs = {
         return
       }
       var tab = { route, name: route.name }
+      document.title = 'GE Spy | ' + tab.name
       if (route.name === 'Login') {
         return
       }
