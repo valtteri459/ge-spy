@@ -1,10 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors')
 const config = require("./config.js")
 const mysql = require("mysql")
 const scanner = require("./api_data_gatherer.js")
 
 const app = express()
+app.use(cors())
 app.use(bodyParser.json());
 
 var db = mysql.createConnection({
@@ -24,8 +26,10 @@ db.connect((err)=>{
         } else {
             console.log("scanner not started, noScan set to true")
         }
-        if (config.scanOnStartup)
-        scanner.loadGraphs(db, true)
+        if (config.scanOnStartup) {
+            scanner.loadData(db)
+            scanner.loadGraphs(db, true)
+        }
     }
 })
 
