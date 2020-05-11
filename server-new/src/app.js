@@ -21,6 +21,7 @@ const authentication = require('./authentication');
 const objection = require('./objection');
 
 const app = express(feathers());
+const axios = require('axios')
 
 // Load app configuration
 app.configure(configuration());
@@ -53,5 +54,48 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
+var fetchItems = () => {
+  axios.get('https://rsbuddy.com/exchange/summary.json').then((allItems) => {
+    var items = []
+    var updatePromises = []
+    Object.keys(allItems.data).forEach(key => {
+      var elem = allItems.data[key]
+      items.push(elem)
+    })
+    var itemsService = app.service('items')
+    items.forEach(item => {
+      itemsService.get(item.id).then(dbItem => {
+      }).catch(() => {
+        updatePromises.push(new Promise((resolve, reject) => {
+          itemsService.create({
+            id: item.id,
+            name: item.name,
+            members: item.members,
+            storePrice: item.sp || 0
+          }).then(() => {
+            resolve()
+          }).catch(e => {
+            reject(e)
+          })
+        }))
+      })
+    })
+    Promise.all(updatePromises).then(() => {
+      console.log('all entries updated')
+    }).catch(e => {
+      console.log('error in inserting items')
+    })
+  }).catch(e => {
+    console.log('ERROR GETTING ITEM DATA: ', e)
+  })
+}
+var fetchGraphs = (longTime = false) => {
 
+}
+oldSetup = app.setup
+app.setup = function (...args) {
+  const results = oldSetup.apply(this, args)
+  fetchItems()
+  return results
+}
 module.exports = app;

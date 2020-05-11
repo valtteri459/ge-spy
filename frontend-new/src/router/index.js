@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Changelog from '../views/Changelog.vue'
+import info from '../views/Info.vue'
 import Item from '../views/Item.vue'
+import Error from '../views/Error.vue'
 
 import store from '../store'
 
@@ -15,9 +16,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/changes',
-    name: 'Changelog',
-    component: Changelog
+    path: '/info',
+    name: 'Info',
+    component: info
   },
   {
     path: '/item/id',
@@ -31,6 +32,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '*',
+    name: 'Error',
+    component: Error
   }
 ]
 

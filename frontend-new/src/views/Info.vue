@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'Changes',
+  name: 'info',
   data () {
     return {
       ghubReturn: [{

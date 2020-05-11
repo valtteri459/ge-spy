@@ -58,7 +58,7 @@ const navTabs = {
         dispatch('loadTabs', route.fullPath)
         return
       }
-      var tab = { route, name: route.name }
+      var tab = { route, name: route.name || 'Unknown' }
       document.title = 'GE Spy | ' + tab.name
       if (route.name === 'Login') {
         return

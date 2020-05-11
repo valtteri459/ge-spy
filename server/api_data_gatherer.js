@@ -68,7 +68,7 @@ module.exports = {
                         if(queried%250 == 0 || queried == itemsLength){
                             console.log("queried ", queried + '/' + itemsLength)
                         }
-                        axios.get('https://rsbuddy.com/exchange/graphs/180/' + elem.id + '.json').then(resultData => {
+                        axios.get('https://rsbuddy.com/exchange/graphs/4320/' + elem.id + '.json').then(resultData => {
                             completed++
                             if (completed % 250 == 0 || completed == itemsLength) {
                                 console.log("completed ", completed + '/' + itemsLength)

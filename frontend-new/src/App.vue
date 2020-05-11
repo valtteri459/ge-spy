@@ -14,7 +14,7 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/changes">
+        <v-list-item link to="/info">
           <v-list-item-action>
             <v-icon>mdi-information</v-icon>
           </v-list-item-action>
