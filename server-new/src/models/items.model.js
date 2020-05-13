@@ -16,7 +16,10 @@ class items extends Model {
       properties: {
         name: { type: 'string' },
         members: { type: 'boolean' },
-        storePrice: { type: 'number' }
+        storePrice: { type: 'number' },
+        overall: { type: 'integer' },
+        osbBuy: { type: ['integer', 'null'] },
+        osbSell: { type: ['integer', 'null'] },
       }
     };
   }
@@ -33,17 +36,22 @@ class items extends Model {
 module.exports = function (app) {
   const db = app.get('knex');
 
-  db.schema.dropTableIfExists('items').then(() => {
-    db.schema.createTable('items', table => {
-      table.integer('id').primary();
-      table.string('name');
-      table.boolean('members');
-      table.integer('storePrice');
-      table.timestamp('createdAt');
-      table.timestamp('updatedAt');
-    })
-      .then(() => console.log('Created items table')) // eslint-disable-line no-console
-      .catch(e => console.error('Error creating items table', e)); // eslint-disable-line no-console
+  db.schema.hasTable('items').then((iftable) => {
+    if(!iftable) {
+      db.schema.createTable('items', table => {
+        table.integer('id').primary();
+        table.string('name');
+        table.boolean('members');
+        table.integer('overall')
+        table.integer('osbBuy').nullable()
+        table.integer('osbSell').nullable()
+        table.integer('storePrice');
+        table.timestamp('createdAt');
+        table.timestamp('updatedAt');
+      })
+        .then(() => console.log('Created items table')) // eslint-disable-line no-console
+        .catch(e => console.error('Error creating items table', e)); // eslint-disable-line no-console
+    }
   })
     .catch(e => console.error('Error removing items table', e)); // eslint-disable-line no-console
 

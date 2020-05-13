@@ -1,14 +1,15 @@
 
-
+const fou = require('../../middleware/findOrUpdate')
+const { disallow } = require('feathers-hooks-common')
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    create: [disallow('external'), fou()],
+    update: [disallow('external')],
+    patch: [disallow('external')],
+    remove: [disallow('external')]
   },
 
   after: {

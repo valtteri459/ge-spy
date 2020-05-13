@@ -59,12 +59,12 @@ const navTabs = {
         return
       }
       var tab = { route, name: route.name || 'Unknown' }
-      document.title = 'GE Spy | ' + tab.name
       if (route.name === 'Login') {
         return
       }
       if (getters.getTabs.length > 0 && getters.getTabs.filter(x => x.route.path === route.path).length > 0) {
         var current = getters.getTabs.filter(x => x.route.path === route.path)[0]
+        document.title = 'GE Spy | ' + current.name
         commit('SET_CURRENT_TAB', current)
         return
       }
@@ -90,6 +90,7 @@ const navTabs = {
       commit('UPDATE_STORED_TABS')
     },
     setTabName ({ commit }, name) {
+      document.title = 'GE Spy | ' + name
       commit('SET_TAB_NAME', name)
       commit('UPDATE_STORED_TABS')
     },

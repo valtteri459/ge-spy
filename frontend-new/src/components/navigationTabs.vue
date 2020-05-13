@@ -6,7 +6,7 @@
         icons-and-text
         :key="'tab-' + i"
         style="min-width: 115px; padding-left: 10px; padding-right: 2px; font-size: 11px;"
-        @click.middle="closeTab(i)"
+        @click.middle.stop="closeTab(i)"
         @change="activeChange(i, tab.route)"
       >
         {{ localizeTabName(tab.name) }}
@@ -35,7 +35,7 @@ export default {
   mounted () {},
   methods: {
     localizeTabName (name) {
-      return name.replace(' ', '_').toUpperCase()
+      return name.toUpperCase()
     },
     activeChange (index, route) {
       if (index === this.activeIndex) return

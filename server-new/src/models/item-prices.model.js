@@ -11,17 +11,16 @@ class itemPrices extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['item', 'timestamp', 'overall', 'accurate'],
+      required: ['overall'],
 
       properties: {
         item: { type: 'integer' },
-        timestamp: { type: 'string' },
+        timestamp: { type: 'integer' },
         overall: { type: 'integer' },
-        osbBuy: { type: 'integer' },
-        osbSell: { type: 'integer' },
-        buy_quantity: { type: 'integer' },
-        sell_quantity: { type: 'integer' },
-        accurate: { type: 'boolean' }
+        osbBuy: { type: ['integer', 'null'] },
+        osbSell: { type: ['integer', 'null'] },
+        buy_quantity: { type: ['integer', 'null'] },
+        sell_quantity: { type: ['integer', 'null'] }
       }
     };
   }
@@ -37,24 +36,25 @@ class itemPrices extends Model {
 
 module.exports = function (app) {
   const db = app.get('knex');
-  db.schema.dropTableIfExists('item_prices').then(() => {
+  db.schema.hasTable('item_prices').then((iftable) => {
+    if (!iftable) {
       db.schema.createTable('item_prices', table => {
         table.integer('item');
-        table.timestamp('timestamp');
+        table.bigint('timestamp');
         table.integer('overall')
         table.integer('osbBuy').nullable()
         table.integer('osbSell').nullable()
         table.integer('buy_quantity').nullable()
         table.integer('sell_quantity').nullable()
-        table.boolean('accurate')
         table.timestamp('createdAt');
         table.timestamp('updatedAt');
         table.primary(['item', 'timestamp'])
       })
         .then(() => console.log('Created item_prices table')) // eslint-disable-line no-console
         .catch(e => console.error('Error creating item_prices table', e)); // eslint-disable-line no-console
-    })
-      .catch(e => console.error('Error removing item_prices table', e)); // eslint-disable-line no-console
+    }
+  })
+    .catch(e => console.error('Error checking item_prices table', e)); // eslint-disable-line no-console
 
   return itemPrices;
 };

@@ -35,21 +35,23 @@ class users extends Model {
 
 module.exports = function (app) {
   const db = app.get('knex');
-  db.schema.dropTableIfExists('users').then(() => {
+  db.schema.hasTable('users').then((iftable) => {
+    if(!iftable) {
       db.schema.createTable('users', table => {
-      table.increments('id');
-    
-      table.string('email').notNullable().unique();
-      table.string('password');
-      table.text('openTabs').nullable();
-      table.text('savedLayout').nullable();
-    
-    
-      table.timestamp('createdAt');
-      table.timestamp('updatedAt');
-    })
-      .then(() => console.log('Created users table')) // eslint-disable-line no-console
-      .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
+        table.increments('id');
+      
+        table.string('email').notNullable().unique();
+        table.string('password');
+        table.text('openTabs').nullable();
+        table.text('savedLayout').nullable();
+      
+      
+        table.timestamp('createdAt');
+        table.timestamp('updatedAt');
+      })
+        .then(() => console.log('Created users table')) // eslint-disable-line no-console
+        .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
+    }
   })
     .catch(e => console.error('Error removing users table', e)); // eslint-disable-line no-console
   

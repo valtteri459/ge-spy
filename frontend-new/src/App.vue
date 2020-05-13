@@ -50,12 +50,12 @@
           return-object>
           <template v-slot:item="data">
             <v-list-item-avatar>
-              <img :src="prefix + data.item.id">
+              <img :src="$prefix + data.item.id">
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title v-html="data.item.name"></v-list-item-title>
               <v-list-item-subtitle>
-                → {{numberFormatter(data.item.osbOverall)}} Coins ↓ {{numberFormatter(data.item.osbBuy)}} Coins ↑ {{numberFormatter(data.item.osbSell)}} Coins
+                → {{numberFormatter(data.item.overall)}} Coins ↓ {{numberFormatter(data.item.osbBuy)}} Coins ↑ {{numberFormatter(data.item.osbSell)}} Coins
               </v-list-item-subtitle>
             </v-list-item-content>
           </template>
@@ -85,8 +85,7 @@ export default {
     selectedItem: null,
     plausibleItems: [],
     isLoading: false,
-    search: null,
-    prefix: ''
+    search: null
   }),
   methods: {
     numberFormatter: helpers.numberFormatter
@@ -97,7 +96,9 @@ export default {
   watch: {
     selectedItem (val) {
       if (val) {
-        console.log(val)
+        if (this.$route.path !== '/item/' + val.id) {
+          this.$router.push('/item/' + val.id)
+        }
         /* HANDLE OPENING ITEM TAB HERE */
         this.$nextTick(() => {
           this.selectedItem = null
@@ -122,7 +123,6 @@ export default {
   },
   async created () {
     this.$vuetify.theme.dark = true
-    this.prefix = (await itemsRepository.getPrefix()).data.imagePrefix
   }
 }
 </script>
