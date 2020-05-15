@@ -9,7 +9,15 @@
           <v-card>
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="headline mb-1">{{itemData.name}}</v-list-item-title>
+                <v-list-item-title class="headline mb-1">
+                  {{itemData.name}}
+                  <v-tooltip bottom v-if="itemData.members">
+                    <template v-slot:activator="{ on }">
+                      <v-icon color="yellow" v-on="on">mdi-star</v-icon>
+                    </template>
+                    <span>Members item</span>
+                  </v-tooltip>
+                </v-list-item-title>
                 <v-list-item-subtitle>item ID {{itemData.id}} - updated {{Math.floor(Math.abs(new Date() - parseISOString(this.itemData.updatedAt))/1000/60)}} minutes ago ({{new Date(parseISOString(this.itemData.updatedAt)).toLocaleString()}})</v-list-item-subtitle>
               </v-list-item-content>
 
@@ -23,36 +31,31 @@
           </v-card>
         </v-col>
         <v-col>
-          <v-alert type="success">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
-          <v-alert type="success">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
-        </v-col>
-        <v-col>
-          <v-alert type="success">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
-          <v-alert type="warning">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
-        </v-col>
-        <v-col>
-          <v-alert type="success">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
-          <v-alert type="error">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
-        </v-col>
-        <v-col>
-          <v-alert type="success">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
-          <v-alert type="info">
-            coyaaaaaaaaaaaaaaaaa
-          </v-alert>
+          <v-card>
+            <v-card-title>Market information</v-card-title>
+            <v-card-text>
+              <v-simple-table dense>
+                <thead>
+                  <tr>
+                    <th>Current price</th>
+                    <th>Sell price</th>
+                    <th>Buy price</th>
+                    <th>market price</th>
+                    <th>High alchemy price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{numberFormatter(itemData.overall || 0)}} coins</td>
+                    <td>{{numberFormatter(itemData.osbSell || 0)}} coins</td>
+                    <td>{{numberFormatter(itemData.osbBuy || 0)}} coins</td>
+                    <td>{{numberFormatter(itemData.storePrice || 0)}} coins</td>
+                    <td>{{numberFormatter(Math.floor(0.6*(itemData.storePrice || 0)))}} coins</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
       <v-row>
