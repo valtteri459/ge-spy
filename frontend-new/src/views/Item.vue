@@ -5,12 +5,12 @@
     </v-overlay>
     <v-container class='page' v-if="!loading">
       <v-row>
-        <v-col>
+        <v-col sm="12" md="6">
           <v-card>
             <v-list-item two-line>
               <v-list-item-content>
                 <v-list-item-title class="headline mb-1">{{itemData.name}}</v-list-item-title>
-                <v-list-item-subtitle>item ID {{itemData.id}}</v-list-item-subtitle>
+                <v-list-item-subtitle>item ID {{itemData.id}} - updated {{Math.floor(Math.abs(new Date() - parseISOString(this.itemData.updatedAt))/1000/60)}} minutes ago ({{new Date(parseISOString(this.itemData.updatedAt)).toLocaleString()}})</v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-avatar
@@ -22,8 +22,6 @@
             </v-list-item>
           </v-card>
         </v-col>
-      </v-row>
-      <v-row>
         <v-col>
           <v-alert type="success">
             coyaaaaaaaaaaaaaaaaa
@@ -85,6 +83,10 @@ export default {
     numberFormatter: helpers.numberFormatter,
     updateData () {
 
+    },
+    parseISOString (s) {
+      var b = s.split(/\D+/)
+      return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]))
     }
   },
   computed: {

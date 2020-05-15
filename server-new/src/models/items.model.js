@@ -25,11 +25,12 @@ class items extends Model {
   }
 
   $beforeInsert() {
-    this.createdAt = this.updatedAt = new Date().toISOString();
+    this.createdAt = new Date()
+    this.updatedAt = new Date()
   }
 
   $beforeUpdate() {
-    this.updatedAt = new Date().toISOString();
+    this.updatedAt = new Date()
   }
 }
 

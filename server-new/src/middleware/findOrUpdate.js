@@ -5,15 +5,15 @@ module.exports = function(){
     if (hook.path === 'item-prices') {
       params = {item: hook.data.item, timestamp: hook.data.timestamp}
     } else {
-      params = {id: hook.data.id}
+      params = hook.data.id
     }
     try {
       var response = await service.get(params).catch((e) => {
       });
-  
       if (response !== undefined) {
       // Set `hook.result` to skip the db call to `create` if a record was found.
         //console.log('got response, it is: ', response.data, 'hook data: ', hook.data, 'params: ', params)
+        
         hook.result = await service.update(params, hook.data).catch(e => {
           console.log('params', params, 'response', response, 'data', hook.data, 'FOU UPDATE ERROR IS: ', e)
         });

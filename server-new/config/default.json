@@ -30,6 +30,11 @@
   },
   "mysql": {
     "client": "mysql2",
-    "connection": "mysql://root:@localhost:3306/ge_spy"
+    "connection": {
+      "host": "localhost",
+      "user": "root",
+      "password": "",
+      "database": "ge_spy"
+    }
   }
 }

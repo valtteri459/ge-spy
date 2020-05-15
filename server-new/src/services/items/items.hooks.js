@@ -13,7 +13,9 @@ module.exports = {
   },
 
   after: {
-    all: [],
+    all: [(hook) => {
+      return hook
+    }],
     find: [],
     get: [],
     create: [],
