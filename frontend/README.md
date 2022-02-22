@@ -1,1 +1,0 @@
-A basic vue webkit installation plus some features
