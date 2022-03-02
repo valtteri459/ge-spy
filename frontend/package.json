@@ -40,7 +40,9 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {
+      "vue/script-setup-uses-vars": 1
+    }
   },
   "browserslist": [
     "> 1%",
