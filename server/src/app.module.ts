@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ItemModule } from './modules/item/item.module';
+import { ItemFetcherModule } from './modules/item-fetcher/item-fetcher.module';
 
 @Module({
-  imports: [ItemModule],
+  imports: [ItemFetcherModule],
 })
 export class AppModule {}

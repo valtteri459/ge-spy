@@ -1,7 +1,1 @@
-import { Module } from '@nestjs/common';
-import { ItemService } from './item.service';
-
-@Module({
-  providers: [ItemService]
-})
-export class ItemModule {}
+//tbd add module to store and get item information
