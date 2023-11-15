@@ -1,95 +1,103 @@
 import { Injectable } from "@nestjs/common";
 import fetch from 'node-fetch'
-import { JagexItemCategoryQueryResponse, JagexItemQueryResponse } from "./types/itemQuery.types";
+import { JagexItemPriceQueryResponse, JagexItemQueryItemInfo, JagexItemQueryResponse } from "./types/itemQuery.types";
 import { ItemService } from "../item/item.service";
+import { PriceService } from "../price/price.service";
 
 @Injectable()
 export class ItemFetcherService {
-  API_PAGE_SIZE = 12
-  API_THROTTLE_MS = 1000
-  TOTAL_PAGES_SEARCHED = 0
-  TOTAL_PAGES_ESTIMATE = 0
-  TOTAL_FAILURES = 0
-
+  dos_on_first_pass = 20
+  delay_ms_in_deep_price_search = 1000
   headers= new fetch.Headers({
     "Accept": "application/json",
     "Content-Type": "application/json",
     "User-Agent": "GE-Spy-valtteri459"
   })
-  baseurl = "https://secure.runescape.com/m=itemdb_oldschool"
-  resolvable_queue: (() => Promise<void>)[] = []
+  baseurlItemdb = "https://secure.runescape.com/m=itemdb_oldschool"
+  baseurlPrices = "https://prices.runescape.wiki"
 
-  constructor(private readonly itemService: ItemService) {
+  constructor(private readonly itemService: ItemService, private readonly priceService: PriceService) {
     //REMOVE LATER FROM CONSTRUCTOR, SHOULD ONLY BE EXECUTED RARELY ON SCHEDULE
     if(process.env.RUN_ITEM_GETTER_ON_START)
     this.getAllItems()
-    
-  }
 
-  resolve_queue_with_throttle() {
-    const firstInLine = this.resolvable_queue.shift()
-    if(firstInLine) {
-      firstInLine().then(() => {
-        setTimeout(() => this.resolve_queue_with_throttle(), this.API_THROTTLE_MS)
-      })
-    } else {
-      console.log('queue empty')
-    }
+    this.getItemPrices()
   }
 
   getAllItems() {
-    this.request("/api/catalogue/category.json?category=1", 'GET').then(async (res) => {
-      let searchCategoriesRaw = await res.text()
-      let searchCategories: JagexItemCategoryQueryResponse["alpha"]
+    console.log('starting Item database update')
+    this.request(this.baseurlPrices+'/api/v1/osrs/mapping', 'GET').then(async (res) => {
+      let searchRaw = await res.text()
+      let searchParsed: JagexItemQueryResponse
       try {
-        searchCategories = (JSON.parse(searchCategoriesRaw) as JagexItemCategoryQueryResponse).alpha
+        searchParsed = (JSON.parse(searchRaw) as JagexItemQueryResponse)
       } catch(e) {
-        console.error('INVALID JSON IN API RESPONSE: ', searchCategoriesRaw, res)
+        console.error('INVALID JSON IN API RESPONSE: ', searchRaw, res)
         throw new Error("INVALID_JSON")
       }
-      
-      let validCategories = searchCategories.filter(e => e.items > 0)
-      this.TOTAL_PAGES_ESTIMATE = validCategories.map(e => Math.ceil(e.items / 12)).reduce((a, b) => a+b, 0)
-      validCategories.forEach(category => 
-        this.resolvable_queue.push(() => this.getItemsByCategory(category.letter, 1, category.items))
-      )
-      this.resolve_queue_with_throttle()
+      console.log('request complete, saving to database...')
+      await this.itemService.saveMany(searchParsed.map(itm => ({
+        id: itm.id,
+        name: itm.name,
+        description: itm.examine,
+        purchaseLimit: itm.limit,
+        lowAlchemy: itm.lowalch,
+        highAlchemy: itm.highalch,
+        shopPrice: itm.value,
+        members: itm.members
+      })))
+      console.log('Item database updated')
     }).catch(e => {
       console.error("error fetching oldschool item catalog", e)
     })
   }
 
-  getItemsByCategory(letter: string, page: number, totalFromCategoryQuery: number, skipNext: boolean = false): Promise<void> {
-    return this.request(`/api/catalogue/items.json?category=1&page=${page}&alpha=${encodeURIComponent(letter)}`, 'GET').then(async (res) => {
-      let apiResponse = await res.text()
-
+  getItemPrices(timestamp: number | null = null, searchDepth: number = 1, previousTimestamp: number | null = null) {
+    console.log('starting Item price data update, search depth ', searchDepth, ' timestamp "', timestamp,'"')
+    this.request(`${this.baseurlPrices}/api/v1/osrs/5m${timestamp ? `?timestamp=${timestamp}` : ''}`, 'GET').then(async (res) => {
+      let searchRaw = await res.text()
+      let searchParsed: JagexItemPriceQueryResponse
       try {
-        apiResponse = JSON.parse(apiResponse)
+        searchParsed = (JSON.parse(searchRaw) as JagexItemPriceQueryResponse)
       } catch(e) {
-        console.error(`INVALID JSON IN API RESPONSE, probably at rate limit:  letter: "${letter}" page: ${page}`)
-        this.API_THROTTLE_MS = Math.ceil(this.API_THROTTLE_MS*1.2)
-        throw new Error('INVALID_JSON')
+        console.error('INVALID JSON IN API RESPONSE: ', searchRaw, res)
+        throw new Error("INVALID_JSON")
       }
-      //console.log(apiResponse.items)
-      this.itemService.saveMany(apiResponse.items.map(e => ({...e, members: e.members === 'true'}))).then(() => {
-        console.log(`TOTAL: ${++this.TOTAL_PAGES_SEARCHED}/${this.TOTAL_PAGES_ESTIMATE} | item page for letter "${letter}" ${page}/${Math.ceil(totalFromCategoryQuery/this.API_PAGE_SIZE)} saved | FAILURES: ${this.TOTAL_FAILURES} DELAY MS: ${this.API_THROTTLE_MS}`)
-      }).catch(e => {
-        console.error(`DATABASE ITEM SAVE FAILED, retrying "${letter}" ${page}/${Math.ceil(totalFromCategoryQuery/this.API_PAGE_SIZE)}`)
-        this.TOTAL_FAILURES++
-        this.resolvable_queue.push(() => this.getItemsByCategory(letter, page, totalFromCategoryQuery, true))
-      })
-      
-      if(page*this.API_PAGE_SIZE < totalFromCategoryQuery && !skipNext) {
-        this.resolvable_queue.push(() => this.getItemsByCategory(letter, page+1, totalFromCategoryQuery))
+      const foundData = searchParsed.data
+      const itemIds = Object.keys(foundData)
+      if(previousTimestamp != searchParsed.timestamp) {
+        console.log('price data fetched, saving to database...')
+        await this.priceService.saveMany(itemIds.map(e => ({
+          itemId: parseInt(e),
+          timestamp: searchParsed.timestamp,
+          highPrice: foundData[e].avgHighPrice,
+          lowPrice: foundData[e].avgLowPrice,
+          highVolume: foundData[e].highPriceVolume,
+          lowVolume: foundData[e].lowPriceVolume
+        })))
+      } else {
+        console.log('skipping save, data not updated yet')
       }
+      if(!timestamp){
+        const now = Math.floor(new Date().getTime()/1000)
+        const parsedNextTime = Math.max(
+          (((searchParsed.timestamp+550)-now)*1000)+5000, //estimated future plus 5 seconds extra
+          5000 //or 5 seconds, whichever is larger
+        )
+        console.log('Next fresh data scheduled ',parsedNextTime/1000, ' seconds into the future')
+        setTimeout(() => this.getItemPrices(null, 1, searchParsed.timestamp), parsedNextTime)
+      }
+      if(--searchDepth > 0) {
+        console.log('recursive mode on, going back 300 seconds(5min) from last fetch. searches left: ', searchDepth)
+        setTimeout(() => this.getItemPrices(searchParsed.timestamp - 300, searchDepth))
+      }
+      console.log('price database updated')
     }).catch(e => {
-      e === "INVALID_JSON" ? undefined : console.error("error updating items in category", e, letter, page)
-      this.TOTAL_FAILURES++
-      this.resolvable_queue.push(() => this.getItemsByCategory(letter, page, totalFromCategoryQuery))
-    }) 
+      console.error("error fetching oldschool item price data", e)
+    })
   }
 
   async request(url: string, method: string) {
-    return fetch(this.baseurl+url, {method: method, headers: this.headers})
+    return fetch(url, {method: method, headers: this.headers})
   }
 }
