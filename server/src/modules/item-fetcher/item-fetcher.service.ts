@@ -53,7 +53,6 @@ export class ItemFetcherService {
   }
 
   getItemPrices(timestamp: number | null = null, searchDepth: number = 1, previousTimestamp: number | null = null) {
-    console.log('starting Item price data update, search depth ', searchDepth, ' timestamp "', timestamp,'"')
     this.request(`${this.baseurlPrices}/api/v1/osrs/5m${timestamp ? `?timestamp=${timestamp}` : ''}`, 'GET').then(async (res) => {
       let searchRaw = await res.text()
       let searchParsed: JagexItemPriceQueryResponse
@@ -66,7 +65,6 @@ export class ItemFetcherService {
       const foundData = searchParsed.data
       const itemIds = Object.keys(foundData)
       if(previousTimestamp != searchParsed.timestamp) {
-        console.log('price data fetched, saving to database...')
         await this.priceService.saveMany(itemIds.map(e => ({
           itemId: parseInt(e),
           timestamp: searchParsed.timestamp,
@@ -91,7 +89,6 @@ export class ItemFetcherService {
         console.log('recursive mode on, going back 300 seconds(5min) from last fetch. searches left: ', searchDepth)
         setTimeout(() => this.getItemPrices(searchParsed.timestamp - 300, searchDepth))
       }
-      console.log('price database updated')
     }).catch(e => {
       console.error("error fetching oldschool item price data", e)
     })
