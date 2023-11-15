@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Raw, Repository } from 'typeorm';
 import { Item } from './entities/item.entity';
 
 @Injectable()
@@ -10,19 +10,23 @@ export class ItemService {
     private usersRepository: Repository<Item>,
   ) {}
 
-  findAll(): Promise<Item[]> {
-    return this.usersRepository.find();
+  async findAll(nameSearch: string): Promise<Item[]> {
+    return await this.usersRepository.find({
+      where: {
+        name: ILike(`%${nameSearch}%`)
+      }
+    });
   }
 
-  findOne(id: number): Promise<Item | null> {
+  asyncfindOne(id: number): Promise<Item | null> {
     return this.usersRepository.findOneBy({ id });
   }
 
-  save(item: Item): Promise<Item> {
+  async save(item: Item): Promise<Item> {
     return this.usersRepository.save(item)
   }
 
-  saveMany(items: Item[]): Promise<Item[]> {
+  async saveMany(items: Item[]): Promise<Item[]> {
     return this.usersRepository.save(items)
   }
 

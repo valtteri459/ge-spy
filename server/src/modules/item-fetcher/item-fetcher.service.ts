@@ -49,7 +49,7 @@ export class ItemFetcherService {
       }
       
       let validCategories = searchCategories.filter(e => e.items > 0)
-      this.TOTAL_PAGES_ESTIMATE = Math.ceil(searchCategories.map(e => e.items).reduce(((p, c) => p+c), 0)/12)
+      this.TOTAL_PAGES_ESTIMATE = validCategories.map(e => Math.ceil(e.items / 12)).reduce((a, b) => a+b, 0)
       validCategories.forEach(category => 
         this.resolvable_queue.push(() => this.getItemsByCategory(category.letter, 1, category.items))
       )
