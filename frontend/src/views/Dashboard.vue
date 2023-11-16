@@ -4,14 +4,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
 import { ref } from 'vue';
 
 import {io} from 'socket.io-client'
 
 const reactiveValue = ref(0)
-const socket = io('ws://localhost:4000/realtime');
-
+const socket = io('http://localhost:4000');
+socket.connect()
+console.log('socket set', socket)
 socket.on("connect", () => {
   reactiveValue.value = 69;
 });
@@ -20,7 +20,7 @@ socket.on("disconnect", () => {
   reactiveValue.value = 420;
 });
 
-socket.on("*", (...args) => {
+socket.on("api/searchItem", (...args) => {
   console.log(args)
   reactiveValue.value++
 });

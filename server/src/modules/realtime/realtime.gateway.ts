@@ -14,9 +14,7 @@ import { RealtimeItemSearchDto } from './dto/realtime-gateway.dto';
 export class RealtimeGateway {
   constructor(
     private readonly itemService: ItemService
-  ){
-    setInterval(() => this.emitItemSearchResults([], this.server), 2000)
-  }
+  ){}
 
   @WebSocketServer()
   server: Server
