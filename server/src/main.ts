@@ -19,7 +19,7 @@ async function bootstrap() {
     .setDefaultContentType('application/json')
     //.addSecurity('user-password', {type: 'userPassword'})
     .addServer('gespy', {
-        url: process.env.NODE_ENV === 'production' ? `wss://${process.env.HOSTNAME}/realtime` : 'ws://localhost:3000/realtime',
+        url: process.env.NODE_ENV === 'production' ? `wss://${process.env.HOSTNAME}/realtime` : 'ws://localhost:4000/realtime',
         protocol: 'socket.io',
     })
     .build();
