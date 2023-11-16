@@ -1,6 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class ItemDto {
+  constructor(itemInfo: ItemDto) {
+    Object.apply(this, itemInfo)
+  }
   @ApiProperty()
   id: number
 

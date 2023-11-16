@@ -5,6 +5,7 @@ import { config } from 'dotenv';
 import { ItemModule } from './modules/item/item.module';
 import { APP_PIPE } from '@nestjs/core';
 import { PriceModule } from './modules/price/price.module';
+import { RealtimeModule } from './modules/realtime/realtime.module';
 config({path: process.env.NODE_ENV !== 'production' ? '.env.development' : ''})
 
 @Module({
@@ -22,7 +23,8 @@ config({path: process.env.NODE_ENV !== 'production' ? '.env.development' : ''})
     }),
     ItemFetcherModule,
     ItemModule,
-    PriceModule
+    PriceModule,
+    RealtimeModule
   ],
   providers: [
     {
