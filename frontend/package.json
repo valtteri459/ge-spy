@@ -5,10 +5,12 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
+    "generate:api": "swagger-typescript-api --module-name-index 1 --disableStrictSSL --axios --unwrap-response-data -p http://localhost:4000/api-json -o ./src/api -n api.ts",
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
+    "axios": "^1.6.2",
     "pinia": "^2.0.23",
     "roboto-fontface": "*",
     "socket.io-client": "^4.7.2",
@@ -23,6 +25,7 @@
     "@vue/eslint-config-typescript": "^11.0.0",
     "eslint": "^8.0.0",
     "eslint-plugin-vue": "^9.0.0",
+    "swagger-typescript-api": "^13.0.3",
     "typescript": "^5.0.0",
     "unplugin-fonts": "^1.0.3",
     "vite": "^4.2.0",

@@ -7,6 +7,6 @@ import { ItemModule } from '../item/item.module';
   
   imports: [ItemModule],
   providers: [RealtimeGateway, RealtimeService],
-  exports: [RealtimeService]
+  exports: [RealtimeGateway]
 })
 export class RealtimeModule {}

@@ -1,3 +1,5 @@
+import { UnstablePriceData } from "./unstable-prices.types"
+
 export type JagexItemQueryItemInfo = {
   examine: string,
   id: number,
@@ -24,4 +26,12 @@ export type JagexItemPriceQueryData = {
 export type JagexItemPriceQueryResponse = {
   data: JagexItemPriceQueryData
   timestamp: number
+}
+
+export type JagexLatestPriceQueryEntry = {
+  [key:string]: UnstablePriceData
+}
+
+export type JagexLatestPriceQueryData = {
+  data: JagexLatestPriceQueryEntry
 }

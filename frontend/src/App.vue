@@ -1,7 +1,8 @@
 <template>
   <v-app id="inspire">
+    <ApplicationTopBar/>
     <v-navigation-drawer
-      model-value
+      :rail="navigationState.sidebar"
       class="pt-4"
     >
       <v-list>
@@ -25,6 +26,9 @@
   </v-app>
 </template>
 <script lang="ts" setup>
-import router from './router';
-  //
+  import { ref } from 'vue';
+  import ApplicationTopBar from './components/ApplicationTopBar.vue';
+  import router from './router';
+  import {useNavigationState} from '@/states/navigation'
+  const navigationState = useNavigationState()
 </script>
