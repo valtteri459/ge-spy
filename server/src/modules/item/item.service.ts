@@ -14,7 +14,8 @@ export class ItemService {
     return await this.usersRepository.find({
       where: {
         name: ILike(`%${nameSearch}%`)
-      }
+      },
+      take:25
     });
   }
 
