@@ -25,7 +25,6 @@ socket.on("disconnect", () => {
 });
 
 socket.on("api/unstablePrices", (newPrices: RealTimePriceUpdate) => {
-  console.log(newPrices)
   latestPrices.data = newPrices.data
 });
 

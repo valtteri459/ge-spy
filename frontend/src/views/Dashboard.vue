@@ -1,7 +1,12 @@
 <template>
-  <h1>Dashboard</h1>
-  <p>add dashboard here {{ socketStatus.connected }}</p>
-  <pre>{{ JSON.stringify(latestPrices.data.slice(0, 5), null, 2) }}</pre>
+  <v-container
+    class="py-8 px-6"
+    fluid
+  >
+    <h1>Dashboard</h1>
+    <p>add dashboard here {{ socketStatus.connected }}</p>
+    <pre>{{ JSON.stringify(latestPrices.data.slice(0, 5), null, 2) }}</pre>
+  </v-container>
 </template>
 
 <script lang="ts" setup>
