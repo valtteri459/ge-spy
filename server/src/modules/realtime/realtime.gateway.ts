@@ -4,7 +4,7 @@ import { Server, Socket } from 'socket.io';
 import { ItemService } from '../item/item.service';
 import { isString } from 'class-validator';
 import { ItemDto } from '../item/dto/item-response.dto';
-import { RealTimePriceUpdateDto, RealTimeItemSearchDto, RealTimeItemRequestDto, RealTimeItemResponseDto, SystemNoticeMessageDto } from './dto/realtime-gateway.dto';
+import { RealTimePriceUpdateDto, RealTimeItemRequestDto, RealTimeItemResponseDto, SystemNoticeMessageDto, RealTimeItemSearchDto } from './dto/realtime-gateway.dto';
 import { UnstablePriceData, UnstablePriceStructure } from '../item-fetcher/types/unstable-prices.types';
 import { ItemFetcherService } from '../item-fetcher/item-fetcher.service';
 
@@ -32,18 +32,15 @@ export class RealtimeGateway{
   })
   async searchItems(
     @ConnectedSocket() client: Socket,
-    @MessageBody() searchString: RealTimeItemSearchDto,
   ) {
-    if(searchString.name && isString(searchString.name) && searchString.name.length > 3 ) {
-      const itemQueryResult = await this.itemService.findAll(searchString.name);
-      await this.emitItemSearchResults(
-        itemQueryResult.map(e => ({
-          ...e, 
-          icon: "https://secure.runescape.com/m=itemdb_oldschool/obj_sprite.gif?id=" + e.id, 
-          icon_large: "https://secure.runescape.com/m=itemdb_oldschool/obj_big.gif?id=" + e.id
-        }))
-      , client);
-    }
+    const itemQueryResult = await this.itemService.findAll();
+    await this.emitItemSearchResults(
+      itemQueryResult.map(e => ({
+        ...e, 
+        icon: "https://secure.runescape.com/m=itemdb_oldschool/obj_sprite.gif?id=" + e.id, 
+        icon_large: "https://secure.runescape.com/m=itemdb_oldschool/obj_big.gif?id=" + e.id
+      }))
+    , client);
   }
 
   @AsyncApiSub({

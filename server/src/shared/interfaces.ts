@@ -1,6 +1,3 @@
-export interface RealTimeItemSearch {
-  name: string
-}
 
 export interface RealTimePriceData {
   high?: number

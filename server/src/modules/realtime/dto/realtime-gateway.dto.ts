@@ -1,9 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { RealTimeItemRequest, RealTimeItemResponse, RealTimeItemSearch, RealTimePriceData, RealTimePriceUpdate, SystemNoticeMessage } from '../../../../../shared/dto/interfaces'
+import { RealTimeItemRequest, RealTimeItemResponse, RealTimePriceData, RealTimePriceUpdate, SystemNoticeMessage } from '../../../shared/interfaces'
 
-export class RealTimeItemSearchDto implements RealTimeItemSearch {
-  @ApiProperty()
-  name: string
+export class RealTimeItemSearchDto {
 }
 
 export class RealTimePriceDataDto implements RealTimePriceData {

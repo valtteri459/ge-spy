@@ -1,7 +1,7 @@
 <template>
   <h1>Dashboard</h1>
   <p>add dashboard here {{ socketStatus.connected }}</p>
-  <pre>{{ JSON.stringify(latestPrices, null, 2) }}</pre>
+  <pre>{{ JSON.stringify(latestPrices.data.slice(0, 5), null, 2) }}</pre>
 </template>
 
 <script lang="ts" setup>

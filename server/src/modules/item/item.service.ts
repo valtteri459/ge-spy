@@ -10,13 +10,8 @@ export class ItemService {
     private usersRepository: Repository<Item>,
   ) {}
 
-  async findAll(nameSearch: string): Promise<Item[]> {
-    return await this.usersRepository.find({
-      where: {
-        name: ILike(`%${nameSearch}%`)
-      },
-      take:25
-    });
+  async findAll(): Promise<Item[]> {
+    return await this.usersRepository.find({});
   }
 
   asyncfindOne(id: number): Promise<Item | null> {

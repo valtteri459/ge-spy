@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue';
-import {RealTimeItemResponse, RealTimeItemSearch, RealTimePriceData, RealTimePriceUpdate} from '../../../shared/dto/interfaces'
+import {RealTimeItemResponse, RealTimePriceData, RealTimePriceUpdate} from '../../../server/src/shared/interfaces'
 import {io} from 'socket.io-client'
 
 const socketStatus = reactive<{connected: boolean}>({
@@ -17,6 +17,7 @@ const socket = io('http://localhost:4000');
 socket.connect()
 socket.on("connect", () => {
   socketStatus.connected = true;
+  sendQuery();
 });
 
 socket.on("disconnect", () => {
@@ -29,8 +30,8 @@ socket.on("api/unstablePrices", (newPrices: RealTimePriceUpdate) => {
 });
 
 
-const sendQuery = (searchString: string) => {
-  socket.emit('api/searchItem', {name: searchString} as RealTimeItemSearch)
+const sendQuery = () => {
+  socket.emit('api/searchItem')
 }
 socket.on('api/searchItem', (itemSearchResponse: RealTimeItemResponse[]) => {
   itemSearchResults.items = itemSearchResponse

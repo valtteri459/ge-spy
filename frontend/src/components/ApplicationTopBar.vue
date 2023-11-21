@@ -18,7 +18,6 @@
           density="compact"
           appendIcon="mdi-magnify"
           no-data-text="Write 3 of more characters"
-          @update:search="(searchText: string) => {debouncedSearch(searchText)}"
           @update:modelValue="(newValue: number) => {logger(newValue)}"
         >
         <template v-slot:item="{ props, item }">
@@ -30,6 +29,7 @@
           ></v-list-item>
         </template>
         </v-autocomplete>
+        <input type="string" style="position:fixed;left:0;top:0;width:0px;height:0px;" ref="input"/>
       </div>
     </v-app-bar-title>
   </v-app-bar>
@@ -41,6 +41,7 @@
   import { useItemSearch } from '@/api';
   import { ref } from 'vue';
 
+  const input = ref<HTMLInputElement>()
   const magicValue = ref<number|null>(null)
   const searchString = ref<string>("")
   const [sendSearch, searchResults] = useItemSearch()
@@ -48,12 +49,6 @@
 
   const logger = (xd: any) => {
     console.log(xd)
-    setTimeout(() => {searchString.value = "";magicValue.value = null;searchResults.items = [],console.log('set to null again')}, 3000)
+    setTimeout(() => {searchString.value = "";magicValue.value = null;input?.value?.focus();input?.value?.blur();console.log('set to null again')}, 3000)
   }
-  const searchFilter = (searchString: string) => {
-    if(searchString.length >= 3) {
-      sendSearch(searchString)
-    }
-  }
-  const debouncedSearch = debounce(searchFilter, 250)
 </script>
