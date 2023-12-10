@@ -26,7 +26,7 @@ export class ItemFetcherService {
   ) {
     //REMOVE LATER FROM CONSTRUCTOR, SHOULD ONLY BE EXECUTED RARELY ON SCHEDULE
     //this.getAllItems()
-    //this.getItemPrices()
+    this.getItemPrices()
     setTimeout(() => this.getUnstablePrices(), 500)
   }
   getUnstablePrices() {

@@ -1,6 +1,8 @@
-import { reactive, ref } from 'vue';
-import {RealTimeItemResponse, RealTimePriceData, RealTimePriceUpdate} from '../../../server/src/shared/interfaces'
+import { reactive, ref, watchEffect } from 'vue';
+import {RealTimeItemRequest, RealTimeItemResponse, RealTimePriceData, RealTimePriceUpdate} from '../../../server/src/shared/interfaces'
 import {io} from 'socket.io-client'
+
+type RealTimeItemStoreObject = Map<number, RealTimeItemResponse>
 
 const socketStatus = reactive<{connected: boolean}>({
   connected: false
@@ -11,6 +13,15 @@ const latestPrices = reactive<RealTimePriceUpdate>({
 })
 const itemSearchResults = reactive<{items: RealTimeItemResponse[]}>({
   items: []
+})
+
+const itemInformation: RealTimeItemStoreObject = new Map<number, RealTimeItemResponse>()
+
+watchEffect(async () => {
+  itemSearchResults.items.forEach(itemRow => {
+    itemInformation.set(itemRow.id, itemRow)
+  })
+  
 })
 
 const socket = io('http://localhost:4000');
@@ -36,8 +47,10 @@ socket.on('api/searchItem', (itemSearchResponse: RealTimeItemResponse[]) => {
   itemSearchResults.items = itemSearchResponse
 })
 
+
 export const useSocket = () => socketStatus
 export const useLatestPrices = () => latestPrices
-export const useItemSearch = (): [(searchString: string) => void, {items: RealTimeItemResponse[]}] => {
+export const useItemData = ()  => itemInformation
+export const useItemSearch = (): [() => void, {items: RealTimeItemResponse[]}] => {
   return [sendQuery, itemSearchResults]
 }

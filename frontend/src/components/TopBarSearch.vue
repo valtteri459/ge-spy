@@ -6,6 +6,7 @@
         ref="searchInput"
         :items="searchResults.items"
         v-model="selectedItemValueRef"
+        auto-select-first
         item-title="name"
         item-value="id"
         placeholder="Item Search"
@@ -29,27 +30,23 @@
 </template>
 
 <script setup lang="ts">
-import { useItemSearch } from '@/api';
+  import { useItemSearch } from '@/api';
   import { ref } from 'vue';
+  import router from '../router';
 
   const hidden_reset_input = ref<HTMLInputElement>()
   const searchInput = ref<HTMLInputElement>()
   const selectedItemValueRef = ref<number|null>(null)
-  const searchString = ref<string>("")
   const [sendSearch, searchResults] = useItemSearch()
   
 
   const logger = (selectedItem: number) => {
-    console.log(selectedItem)
+    router.push('/item/'+selectedItem)
     setTimeout(() => {
-      searchString.value = ""
       selectedItemValueRef.value = null
-      hidden_reset_input?.value?.focus()
+      hidden_reset_input?.value?.focus() //required to clear the proper input
       hidden_reset_input?.value?.blur()
-      console.log('set to null again')
-    }, 3000)
-    setTimeout(() => {
-      searchInput.value?.focus()
-    }, 5000)
+    },100) //small timeout to avoid graphical glitches
+    //searchInput.value?.focus() //- optional to allow a new search 
   }
 </script>
