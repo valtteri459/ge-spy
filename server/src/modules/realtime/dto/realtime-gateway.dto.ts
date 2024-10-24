@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { RealTimeItemRequest, RealTimeItemResponse, RealTimePriceData, RealTimePriceUpdate, SystemNoticeMessage } from '../../../shared/interfaces'
+import { RealTimePriceData, RealTimePriceUpdate } from '../../../shared/interfaces'
 
 export class RealTimeItemSearchDto {
 }
@@ -18,51 +18,4 @@ export class RealTimePriceDataDto implements RealTimePriceData {
 export class RealTimePriceUpdateDto implements RealTimePriceUpdate {
   @ApiProperty()
   data: [number, RealTimePriceData][]
-}
-
-export class RealTimeItemRequestDto implements RealTimeItemRequest {
-  @ApiProperty()
-  id: number
-}
-
-export class RealTimeItemResponseDto implements RealTimeItemResponse {
-  @ApiProperty()
-  id: number
-
-  @ApiProperty()
-  name: string
-
-  @ApiProperty()
-  description: string
-
-  @ApiProperty({required: false, nullable: true})
-  purchaseLimit: number | null
-
-  @ApiProperty({required: false, nullable: true})
-  lowAlchemy: number | null
-
-  @ApiProperty({required: false, nullable: true})
-  highAlchemy: number | null
-
-  @ApiProperty({required: false, nullable: true})
-  shopPrice: number | null
-
-  @ApiProperty()
-  members: boolean
-
-  @ApiProperty()
-  icon: string
-
-  @ApiProperty()
-  icon_large: string
-}
-
-export class SystemNoticeMessageDto implements SystemNoticeMessage {
-  @ApiProperty({
-    enum: ['INFO', 'WARNING', 'ERROR'],
-    type: String
-  })
-  type: 'INFO'| 'WARNING' | 'ERROR'
-  @ApiProperty()
-  message: string
 }

@@ -5,7 +5,7 @@ import { ItemModule } from '../item/item.module';
 
 @Module({
   
-  imports: [ItemModule],
+  imports: [],
   providers: [RealtimeGateway, RealtimeService],
   exports: [RealtimeGateway]
 })
